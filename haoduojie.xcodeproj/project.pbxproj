@@ -1,0 +1,278 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E944F7BC14FC87CE00DD5DE4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E944F7BB14FC87CE00DD5DE4 /* UIKit.framework */; };
+		E944F7BE14FC87CE00DD5DE4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E944F7BD14FC87CE00DD5DE4 /* Foundation.framework */; };
+		E944F7C014FC87CE00DD5DE4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E944F7BF14FC87CE00DD5DE4 /* CoreGraphics.framework */; };
+		E944F7C614FC87CE00DD5DE4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E944F7C414FC87CE00DD5DE4 /* InfoPlist.strings */; };
+		E944F7C814FC87CE00DD5DE4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E944F7C714FC87CE00DD5DE4 /* main.m */; };
+		E944F7CC14FC87CE00DD5DE4 /* haoduojieAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E944F7CB14FC87CE00DD5DE4 /* haoduojieAppDelegate.m */; };
+		E944F7CF14FC87CE00DD5DE4 /* haoduojieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E944F7CE14FC87CE00DD5DE4 /* haoduojieViewController.m */; };
+		E944F7D214FC87CE00DD5DE4 /* haoduojieViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E944F7D014FC87CE00DD5DE4 /* haoduojieViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		E944F7B714FC87CE00DD5DE4 /* haoduojie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = haoduojie.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E944F7BB14FC87CE00DD5DE4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		E944F7BD14FC87CE00DD5DE4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		E944F7BF14FC87CE00DD5DE4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		E944F7C314FC87CE00DD5DE4 /* haoduojie-Info.plist */ = {isa = PBXFileReference; path = "haoduojie-Info.plist"; sourceTree = "<group>"; };
+		E944F7C514FC87CE00DD5DE4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E944F7C714FC87CE00DD5DE4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E944F7C914FC87CE00DD5DE4 /* haoduojie-Prefix.pch */ = {isa = PBXFileReference; path = "haoduojie-Prefix.pch"; sourceTree = "<group>"; };
+		E944F7CA14FC87CE00DD5DE4 /* haoduojieAppDelegate.h */ = {isa = PBXFileReference; path = haoduojieAppDelegate.h; sourceTree = "<group>"; };
+		E944F7CB14FC87CE00DD5DE4 /* haoduojieAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = haoduojieAppDelegate.m; sourceTree = "<group>"; };
+		E944F7CD14FC87CE00DD5DE4 /* haoduojieViewController.h */ = {isa = PBXFileReference; path = haoduojieViewController.h; sourceTree = "<group>"; };
+		E944F7CE14FC87CE00DD5DE4 /* haoduojieViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = haoduojieViewController.m; sourceTree = "<group>"; };
+		E944F7D114FC87CE00DD5DE4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/haoduojieViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E944F7B414FC87CE00DD5DE4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E944F7BC14FC87CE00DD5DE4 /* UIKit.framework in Frameworks */,
+				E944F7BE14FC87CE00DD5DE4 /* Foundation.framework in Frameworks */,
+				E944F7C014FC87CE00DD5DE4 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E944F7AC14FC87CD00DD5DE4 = {
+			isa = PBXGroup;
+			children = (
+				E944F7C114FC87CE00DD5DE4 /* haoduojie */,
+				E944F7BA14FC87CE00DD5DE4 /* Frameworks */,
+				E944F7B814FC87CE00DD5DE4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E944F7B814FC87CE00DD5DE4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E944F7B714FC87CE00DD5DE4 /* haoduojie.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E944F7BA14FC87CE00DD5DE4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E944F7BB14FC87CE00DD5DE4 /* UIKit.framework */,
+				E944F7BD14FC87CE00DD5DE4 /* Foundation.framework */,
+				E944F7BF14FC87CE00DD5DE4 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E944F7C114FC87CE00DD5DE4 /* haoduojie */ = {
+			isa = PBXGroup;
+			children = (
+				E944F7CA14FC87CE00DD5DE4 /* haoduojieAppDelegate.h */,
+				E944F7CB14FC87CE00DD5DE4 /* haoduojieAppDelegate.m */,
+				E944F7CD14FC87CE00DD5DE4 /* haoduojieViewController.h */,
+				E944F7CE14FC87CE00DD5DE4 /* haoduojieViewController.m */,
+				E944F7D014FC87CE00DD5DE4 /* haoduojieViewController.xib */,
+				E944F7C214FC87CE00DD5DE4 /* Supporting Files */,
+			);
+			path = haoduojie;
+			sourceTree = "<group>";
+		};
+		E944F7C214FC87CE00DD5DE4 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E944F7C314FC87CE00DD5DE4 /* haoduojie-Info.plist */,
+				E944F7C414FC87CE00DD5DE4 /* InfoPlist.strings */,
+				E944F7C714FC87CE00DD5DE4 /* main.m */,
+				E944F7C914FC87CE00DD5DE4 /* haoduojie-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E944F7B614FC87CE00DD5DE4 /* haoduojie */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E944F7D514FC87CE00DD5DE4 /* Build configuration list for PBXNativeTarget "haoduojie" */;
+			buildPhases = (
+				E944F7B314FC87CE00DD5DE4 /* Sources */,
+				E944F7B414FC87CE00DD5DE4 /* Frameworks */,
+				E944F7B514FC87CE00DD5DE4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = haoduojie;
+			productName = haoduojie;
+			productReference = E944F7B714FC87CE00DD5DE4 /* haoduojie.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E944F7AE14FC87CD00DD5DE4 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = E944F7B114FC87CD00DD5DE4 /* Build configuration list for PBXProject "haoduojie" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = E944F7AC14FC87CD00DD5DE4;
+			productRefGroup = E944F7B814FC87CE00DD5DE4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E944F7B614FC87CE00DD5DE4 /* haoduojie */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E944F7B514FC87CE00DD5DE4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E944F7C614FC87CE00DD5DE4 /* InfoPlist.strings in Resources */,
+				E944F7D214FC87CE00DD5DE4 /* haoduojieViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E944F7B314FC87CE00DD5DE4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E944F7C814FC87CE00DD5DE4 /* main.m in Sources */,
+				E944F7CC14FC87CE00DD5DE4 /* haoduojieAppDelegate.m in Sources */,
+				E944F7CF14FC87CE00DD5DE4 /* haoduojieViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		E944F7C414FC87CE00DD5DE4 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E944F7C514FC87CE00DD5DE4 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		E944F7D014FC87CE00DD5DE4 /* haoduojieViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E944F7D114FC87CE00DD5DE4 /* en */,
+			);
+			name = haoduojieViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E944F7D314FC87CE00DD5DE4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		E944F7D414FC87CE00DD5DE4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E944F7D614FC87CE00DD5DE4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "haoduojie/haoduojie-Prefix.pch";
+				INFOPLIST_FILE = "haoduojie/haoduojie-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		E944F7D714FC87CE00DD5DE4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "haoduojie/haoduojie-Prefix.pch";
+				INFOPLIST_FILE = "haoduojie/haoduojie-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E944F7B114FC87CD00DD5DE4 /* Build configuration list for PBXProject "haoduojie" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E944F7D314FC87CE00DD5DE4 /* Debug */,
+				E944F7D414FC87CE00DD5DE4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E944F7D514FC87CE00DD5DE4 /* Build configuration list for PBXNativeTarget "haoduojie" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E944F7D614FC87CE00DD5DE4 /* Debug */,
+				E944F7D714FC87CE00DD5DE4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E944F7AE14FC87CD00DD5DE4 /* Project object */;
+}
