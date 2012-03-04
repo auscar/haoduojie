@@ -8,22 +8,27 @@
 
 #import "haoduojieAppDelegate.h"
 
-#import "haoduojieViewController.h"
+#import "HaoduojieTabController.h"
+#import "PublishController.h"
+
 
 @implementation haoduojieAppDelegate
 
-@synthesize window = _window;
-@synthesize viewController = _viewController;
+@synthesize window;
+@synthesize rootController;
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    //self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    self.viewController = [[haoduojieViewController alloc] initWithNibName:@"haoduojieViewController" bundle:nil]; 
-    self.window.rootViewController = self.viewController;
+    //self.rootController = [[HaoduojieTabController alloc] initWithNibName:@"HaoduojieTabController" bundle:nil]; 
+    //self.window.rootViewController = self.rootController;
+    [self.window addSubview:rootController.view];
     [self.window makeKeyAndVisible];
     return YES;
 }
+
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
@@ -63,5 +68,9 @@
      See also applicationDidEnterBackground:.
      */
 }
-
+-(void)dealloc{
+    [rootController release];
+    [window release];
+    [super dealloc];
+}
 @end

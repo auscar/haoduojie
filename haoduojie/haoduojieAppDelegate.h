@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class haoduojieViewController;
+@interface haoduojieAppDelegate : UIResponder <UIApplicationDelegate>{
+    UIWindow *window;
+    UITabBarController *rootController;
+}
 
-@interface haoduojieAppDelegate : UIResponder <UIApplicationDelegate>
-
-@property (strong, nonatomic) UIWindow *window;
-
-@property (strong, nonatomic) haoduojieViewController *viewController;
+@property (strong, nonatomic) IBOutlet UIWindow *window;
+@property (nonatomic, retain) IBOutlet UITabBarController *rootController;
 
 @end
