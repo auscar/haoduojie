@@ -8,7 +8,6 @@
 
 #import "haoduojieAppDelegate.h"
 
-#import "HaoduojieTabController.h"
 #import "PublishController.h"
 
 

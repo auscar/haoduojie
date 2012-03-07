@@ -8,7 +8,14 @@
 
 #import "PhotoFlowController.h"
 
+#import "MyFavStreetsViewController.h"
+#import "MyStreetsViewController.h"
+
+
 @implementation PhotoFlowController
+@synthesize myOwnStreets;
+@synthesize myFavStreets;
+@synthesize toolBar;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -31,12 +38,17 @@
 
 - (void)viewDidLoad
 {
+    [self.view addSubview:myOwnStreets.view];
+    //[self.view insertSubview:myFavStreets.view atIndex:0];
+    //self.view.hidden = YES;
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }
 
 - (void)viewDidUnload
 {
+    [self setMyOwnStreets:nil];
+    [self setMyFavStreets:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -48,4 +60,9 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)dealloc {
+    [myOwnStreets release];
+    [myFavStreets release];
+    [super dealloc];
+}
 @end
