@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PublishController : UIViewController
+@interface PublishController : UITableViewController
 
 @end

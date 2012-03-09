@@ -12,6 +12,8 @@
 
 
 @interface PhotoFlowController : UIViewController{
+    CGPoint touchBeganPoint;
+    
     MyFavStreetsViewController *myFavStreets;
     MyStreetsViewController *myOwnStreets;
     UIView *bottomBoard;
