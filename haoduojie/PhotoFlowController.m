@@ -13,16 +13,10 @@
 
 #define kTriggerOffSet 100.0f
 
-@implementation UIToolbar (CustomImage)
-- (void)drawRect:(CGRect)rect {
-    UIImage *image = [UIImage imageNamed: @"17.png"];
-    [image drawInRect:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
-}
-@end
 
 @implementation UINavigationBar (CustomImage)
 - (void)drawRect:(CGRect)rect {
-    UIImage *image = [UIImage imageNamed: @"17.png"];
+    UIImage *image = [UIImage imageNamed: @"navigationBarBackgroundRetro.png"];
     [image drawInRect:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
 }
 @end
@@ -81,6 +75,23 @@
     //[self.view insertSubview:myFavStreets.view atIndex:1];
     //[self.view insertSubview:myOwnStreets.view atIndex:0];
     [self allHide];    
+    
+    //外观的一些定制logo啊之类的:
+    UIImage *logoImg = [UIImage imageNamed:@"haoduojie-logo.png"];
+    UIImageView *logoImgView = [[UIImageView alloc] initWithImage:logoImg];
+    
+    //navigationBar上的titleView
+    UIView *titleView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,logoImg.size.width, logoImg.size.height)];
+    
+    [titleView addSubview:logoImgView];
+    logoImgView.center = titleView.center;
+    
+    self.tabBarController.navigationItem.titleView = titleView;
+    
+    
+    
+    
+    
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }
