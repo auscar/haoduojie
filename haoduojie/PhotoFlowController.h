@@ -11,7 +11,7 @@
 #import "MyStreetsViewController.h"
 
 
-@interface PhotoFlowController : UIViewController{
+@interface PhotoFlowController : UIViewController<UITabBarControllerDelegate>{
     CGPoint touchBeganPoint;
     
     MyFavStreetsViewController *myFavStreets;
@@ -28,6 +28,7 @@
 
 @property (retain, nonatomic) IBOutlet UIView *bottomBoard;
 @property (retain, nonatomic) IBOutlet UIView *photoFlowBoard;
+
 
 - (IBAction)ownBtnTapped:(id)sender;
 - (IBAction)favBtnTapped:(id)sender;

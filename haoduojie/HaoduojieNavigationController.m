@@ -8,13 +8,22 @@
 
 #import "HaoduojieNavigationController.h"
 
+@implementation UINavigationBar (CustomImage)
+- (void)drawRect:(CGRect)rect {
+    UIImage *image = [UIImage imageNamed: @"navigationBarBackgroundRetro.png"];
+    [image drawInRect:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+}
+@end
+
 @implementation HaoduojieNavigationController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
+   
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+
     }
     return self;
 }
@@ -40,6 +49,7 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
+    
     [super viewDidLoad];
 }
 */
@@ -57,4 +67,13 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+//---------------------------------------------------
+//这个方法每一个tab应该都会被调用的
+-(void)tabBarController:(UITabBarController *)barController didSelectViewController:(UIViewController *)viewController{
+    if(barController.selectedIndex == 0){//第一个的话就要
+        
+    }else{
+       self.navigationBarHidden = NO;
+    }
+}
 @end

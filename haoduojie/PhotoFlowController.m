@@ -6,6 +6,7 @@
 //  Copyright 2012年 __MyCompanyName__. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "PhotoFlowController.h"
 
 #import "MyFavStreetsViewController.h"
@@ -15,6 +16,12 @@
 
 
 @implementation UINavigationBar (CustomImage)
+- (void)drawRect:(CGRect)rect {
+    UIImage *image = [UIImage imageNamed: @"navigationBarBackgroundRetro.png"];
+    [image drawInRect:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+}
+@end
+@implementation UIToolbar (CustomImage)
 - (void)drawRect:(CGRect)rect {
     UIImage *image = [UIImage imageNamed: @"navigationBarBackgroundRetro.png"];
     [image drawInRect:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
@@ -62,14 +69,17 @@
 
 
 
-
-
-
-
 #pragma mark - View lifecycle
-
+- (void)viewWillAppear:(BOOL)animated{
+    self.tabBarController.navigationController.navigationBarHidden = YES;
+    
+    [super viewWillAppear:animated];
+}
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    
     [self.bottomBoard addSubview:myOwnStreets.view];
     [self.bottomBoard addSubview:myFavStreets.view];
     //[self.view insertSubview:myFavStreets.view atIndex:1];
@@ -77,11 +87,12 @@
     [self allHide];    
     
     //外观的一些定制logo啊之类的:
+    
     UIImage *logoImg = [UIImage imageNamed:@"haoduojie-logo.png"];
     UIImageView *logoImgView = [[UIImageView alloc] initWithImage:logoImg];
     
     //navigationBar上的titleView
-    UIView *titleView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,logoImg.size.width, logoImg.size.height)];
+    UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0,0,logoImg.size.width, logoImg.size.height)];
     
     [titleView addSubview:logoImgView];
     logoImgView.center = titleView.center;
@@ -89,11 +100,47 @@
     self.tabBarController.navigationItem.titleView = titleView;
     
     
+    UIImage *logoImg2 = [UIImage imageNamed:@"haoduojie-logo.png"];
+    UIImageView *toolBarLogoImgView = [[UIImageView alloc] initWithImage:logoImg2];
+    toolBarLogoImgView.center = self.toolBar.center;
+    [self.toolBar addSubview:toolBarLogoImgView];
     
     
+    //阴影
+    CGColorRef darkColor = [[UIColor blackColor] colorWithAlphaComponent:.3f].CGColor;  
+    CGColorRef lightColor = [UIColor clearColor].CGColor;
     
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    //shadow
+    CAGradientLayer *shadow = [[[CAGradientLayer alloc] init] autorelease];  
+    shadow.frame = CGRectMake(-10,0, 10, self.view.frame.size.height);  
+    shadow.colors = [NSArray arrayWithObjects:(id)darkColor, (id)lightColor, nil];  
+    //水平方向阴影
+    shadow.startPoint = CGPointMake(1.0, 0.8);
+    shadow.endPoint = CGPointMake(0.0, 0.8);
+    shadow.opacity = 0.3f;
+    
+    //shadow2
+    CAGradientLayer *shadow2 = [[[CAGradientLayer alloc] init] autorelease];  
+    shadow2.frame = CGRectMake(self.view.frame.size.width,0, 10, self.view.frame.size.height);  
+    shadow2.colors = [NSArray arrayWithObjects:(id)darkColor, (id)lightColor, nil];
+    //水平方向阴影
+    shadow2.startPoint = CGPointMake(0.0, 0.8);
+    shadow2.endPoint = CGPointMake(1.0, 0.8);
+    shadow2.opacity = 0.3f;
+    
+    /*
+    [shadow setShadowOffset:CGSizeMake(5, 5)];
+    [shadow setShadowRadius:6];
+    [shadow setShadowOpacity:1]; 
+    [shadow setShadowColor:[UIColor blueColor].CGColor];
+     */
+    
+    //bottomShadow.alpha = 0.6;
+    
+    [self.photoFlowBoard.layer addSublayer:shadow];
+    [self.photoFlowBoard.layer insertSublayer:shadow2 atIndex:0];
+    //[self.photoFlowBoard.layer addSublayer:shadow2];
+    
 }
 
 - (void)viewDidUnload
@@ -211,8 +258,6 @@
 }
 
 #pragma mark - actions
-
-
 - (IBAction)ownBtnTapped:(id)sender{
     if (photoBoardIsOutOfStage) {
         [self slideBack];
@@ -228,5 +273,6 @@
         [self slideToRight];
     }
 }
+
 
 @end

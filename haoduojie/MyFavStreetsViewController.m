@@ -16,6 +16,10 @@
 {
     streetInfos = [[NSArray alloc] initWithObjects:@"fashion street", @"Wang Fujing Street",@"Tian Shangrenjie Street", nil];
     
+    //初始化一下表格的宽度
+    self.tableView.frame = CGRectMake(0, 0, 290, self.view.frame.size.height);
+    
+    
     [super viewDidLoad];
 }
 
@@ -60,7 +64,7 @@
 #pragma mark - UITableView datasource
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return @"My Fav Streets";
+    return nil;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

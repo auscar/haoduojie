@@ -6,8 +6,8 @@
 //  Copyright 2012年 __MyCompanyName__. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 
-
-@interface HaoduojieNavigationController : UINavigationViewController
+@interface HaoduojieNavigationController : UINavigationController<UITabBarControllerDelegate>
 
 @end

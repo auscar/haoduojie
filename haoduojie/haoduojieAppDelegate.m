@@ -24,6 +24,7 @@
     // Override point for customization after application launch.
     //self.rootController = [[HaoduojieTabController alloc] initWithNibName:@"HaoduojieTabController" bundle:nil]; 
     //self.window.rootViewController = self.rootController;
+    self.tabBarController.delegate = self.navController;
     [self.navController pushViewController:self.tabBarController animated:NO];
     [self.window addSubview:rootController.view];
     [self.window makeKeyAndVisible];

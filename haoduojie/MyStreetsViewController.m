@@ -32,6 +32,8 @@
 - (void)viewDidLoad
 {
     streetInfos = [[NSArray alloc] initWithObjects:@"My Street1", @"My Street2",@"My Street3", nil];
+    
+    self.tableView.frame = CGRectMake(30, 0, 290, self.view.frame.size.height);
     [super viewDidLoad];
 }
 - (void)viewDidUnload
