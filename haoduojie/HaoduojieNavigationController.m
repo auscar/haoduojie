@@ -1,14 +1,14 @@
 //
-//  HaoduojieTabController.m
+//  HaoduojieNavigationController.m
 //  haoduojie
 //
-//  Created by  on 12-3-1.
+//  Created by  on 12-3-10.
 //  Copyright 2012年 __MyCompanyName__. All rights reserved.
 //
 
-#import "HaoduojieTabController.h"
+#import "HaoduojieNavigationController.h"
 
-@implementation HaoduojieTabController
+@implementation HaoduojieNavigationController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,11 +29,20 @@
 
 #pragma mark - View lifecycle
 
+/*
+// Implement loadView to create a view hierarchy programmatically, without using a nib.
+- (void)loadView
+{
+}
+*/
+
+/*
+// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
 }
+*/
 
 - (void)viewDidUnload
 {
