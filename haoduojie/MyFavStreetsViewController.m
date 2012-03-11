@@ -19,6 +19,14 @@
     //初始化一下表格的宽度
     self.tableView.frame = CGRectMake(0, 0, 290, self.view.frame.size.height);
     
+    //backgroud texture
+    //UIImageView *bg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jie-bg.png"]];
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"jie-bg.png"]];
+    //[self.view insertSubview:bg atIndex:0];
+    //[self.view addSubview:bg];
+
+    
+    
     
     [super viewDidLoad];
 }
@@ -64,7 +72,7 @@
 #pragma mark - UITableView datasource
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return nil;
+    return @"我关注的街道";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -80,6 +88,7 @@
 	}
     
     cell.textLabel.text = [streetInfos objectAtIndex:indexPath.row];
+    cell.textLabel.textColor = [UIColor whiteColor];
     
 	return cell;
 }

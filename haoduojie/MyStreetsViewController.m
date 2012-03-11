@@ -34,6 +34,9 @@
     streetInfos = [[NSArray alloc] initWithObjects:@"My Street1", @"My Street2",@"My Street3", nil];
     
     self.tableView.frame = CGRectMake(30, 0, 290, self.view.frame.size.height);
+    
+    
+     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"jie-bg.png"]];
     [super viewDidLoad];
 }
 - (void)viewDidUnload
@@ -59,7 +62,7 @@
 #pragma mark - UITableView datasource
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return @"My Fav Streets";
+    return @"我的街道";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -75,6 +78,7 @@
 	}
     
     cell.textLabel.text = [streetInfos objectAtIndex:indexPath.row];
+    cell.textLabel.textColor = [UIColor whiteColor];
     
 	return cell;
 }
