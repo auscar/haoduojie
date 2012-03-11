@@ -11,6 +11,7 @@
 
 #import "MyFavStreetsViewController.h"
 #import "MyStreetsViewController.h"
+#import "PhotoFlow.h"
 
 #define kTriggerOffSet 100.0f
 
@@ -28,12 +29,18 @@
 }
 @end
 
+//@class PhotoFlow;
+
 @implementation PhotoFlowController
 @synthesize myOwnStreets;
 @synthesize myFavStreets;
 @synthesize toolBar;
 @synthesize bottomBoard;
 @synthesize photoFlowBoard;
+@synthesize table1;
+@synthesize table2;
+@synthesize pf1;
+@synthesize pf2;
 
 
 
@@ -79,6 +86,21 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    pf1 = [[PhotoFlow alloc] init];
+    pf2 = [[PhotoFlow alloc] init];
+    
+    photos1 = [[NSArray alloc] initWithObjects:@"1.jpg",@"2.jpg",@"3.jpg",@"4.jpg",@"5.jpg", nil];
+    photos2 = [[NSArray alloc] initWithObjects:@"7.jpg",@"8.jpg",@"9.jpg",@"10.jpg",@"11.jpg", nil];
+    
+    pf1.photos = [[NSArray alloc] initWithArray:photos1];
+    pf2.photos = [[NSArray alloc] initWithArray:photos2];
+    
+    table1.delegate = pf1;
+    table1.dataSource = pf1;
+    table2.delegate = pf2;
+    table2.dataSource = pf2;
+    
     
     [self.bottomBoard addSubview:myOwnStreets.view];
     [self.bottomBoard addSubview:myFavStreets.view];
@@ -149,6 +171,8 @@
     [self setMyFavStreets:nil];
     [self setBottomBoard:nil];
     [self setPhotoFlowBoard:nil];
+    [self setTable1:nil];
+    [self setTable2:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -165,6 +189,8 @@
     [myFavStreets release];
     [bottomBoard release];
     [photoFlowBoard release];
+    [table1 release];
+    [table2 release];
     [super dealloc];
 }
 
@@ -273,6 +299,5 @@
         [self slideToRight];
     }
 }
-
 
 @end
