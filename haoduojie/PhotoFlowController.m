@@ -41,6 +41,7 @@
 @synthesize table2;
 @synthesize pf1;
 @synthesize pf2;
+@synthesize flower;
 
 
 
@@ -73,7 +74,14 @@
     self.myFavStreets.view.hidden = NO;
     self.myOwnStreets.view.hidden = YES;
 }
-
+-(void)onDrag:(UIPanGestureRecognizer*)r{
+    
+    CGPoint p = [r locationInView:r.view];
+    //table1.center = p;
+    table1.contentOffset = CGPointMake(6, -p.y);
+    
+    NSLog(@"swipe....");
+}
 
 
 #pragma mark - View lifecycle
@@ -86,21 +94,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+   
     
-    pf1 = [[PhotoFlow alloc] init];
-    pf2 = [[PhotoFlow alloc] init];
-    
-    photos1 = [[NSArray alloc] initWithObjects:@"1.jpg",@"2.jpg",@"3.jpg",@"4.jpg",@"5.jpg", nil];
-    photos2 = [[NSArray alloc] initWithObjects:@"7.jpg",@"8.jpg",@"9.jpg",@"10.jpg",@"11.jpg", nil];
-    
-    pf1.photos = [[NSArray alloc] initWithArray:photos1];
-    pf2.photos = [[NSArray alloc] initWithArray:photos2];
-    
-    table1.delegate = pf1;
-    table1.dataSource = pf1;
-    table2.delegate = pf2;
-    table2.dataSource = pf2;
-    
+    NSLog(@"难道都是假象！！！？");
     
     [self.bottomBoard addSubview:myOwnStreets.view];
     [self.bottomBoard addSubview:myFavStreets.view];
@@ -191,6 +187,7 @@
     [photoFlowBoard release];
     [table1 release];
     [table2 release];
+    [flower release];
     [super dealloc];
 }
 
@@ -299,5 +296,10 @@
         [self slideToRight];
     }
 }
+#pragma mark - delegate
+-(void) scrollViewDidScroll:(UIScrollView *)scrollView{
+    NSLog(@"scrollview scroll...");
+}
+
 
 @end

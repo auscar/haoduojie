@@ -11,20 +11,17 @@
 #import "MyStreetsViewController.h"
 #import "PhotoFlow.h"
 
-//@class PhotoFlow;
-@interface PhotoFlowController : UIViewController<UITabBarControllerDelegate>{
+@class ImageFlower;
+@interface PhotoFlowController : UIViewController<UITabBarControllerDelegate,UIScrollViewDelegate>{
     CGPoint touchBeganPoint;
-    NSArray *photos1;
-    NSArray *photos2;
+    NSArray *photos;
     
     MyFavStreetsViewController *myFavStreets;
     MyStreetsViewController *myOwnStreets;
     UIView *bottomBoard;
     UIView *photoFlowBoard;
-    UITableView *table1;
-    UITableView *table2;
-    PhotoFlow *pf1;
-    PhotoFlow *pf2;
+    
+    ImageFlower* flower;
     
     BOOL photoBoardIsOutOfStage;
 }
@@ -35,6 +32,8 @@
 
 @property (retain, nonatomic) IBOutlet UIView *bottomBoard;
 @property (retain, nonatomic) IBOutlet UIView *photoFlowBoard;
+
+@property (retain, nonatomic) IBOutlet ImageFlower* flower;
 
 @property (retain, nonatomic) IBOutlet UITableView *table1;
 @property (retain, nonatomic) IBOutlet UITableView *table2;

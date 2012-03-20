@@ -80,6 +80,8 @@
     cell.textLabel.text = [streetInfos objectAtIndex:indexPath.row];
     cell.textLabel.textColor = [UIColor whiteColor];
     
+    
+    
 	return cell;
 }
 
