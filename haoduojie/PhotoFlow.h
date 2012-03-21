@@ -9,8 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @interface PhotoFlow : NSObject<UITableViewDelegate, UITableViewDataSource>{
-   
 }
 
 @property (nonatomic, retain) NSArray *photos;
+
+
+//-(CGFloat)getHeight:(UIImage *)image;
 @end

@@ -20,6 +20,15 @@
     return self;
 }
 
+-(CGFloat) getHeight:(UIImage *)image withWidth:(CGFloat)width{
+    if(!image)return 0.0f;
+    
+    CGFloat rate = image.size.height/image.size.width;
+    
+    return floor(width*rate);
+    
+}
+
 #pragma mark - UITableView delegate
 
 // Called after the user changes the selection.
@@ -37,9 +46,8 @@
     return [photos count];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    //UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    //UIImageView *photo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"x_large_1wYX_61f900001d331262.jpg"]];
-    return 186;
+    UIImage *p = [UIImage imageNamed:[photos objectAtIndex:indexPath.row]];
+    return [self getHeight:p withWidth:151];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -47,15 +55,17 @@
 	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-        //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        UIImageView *photo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[photos objectAtIndex:indexPath.row]]];
-        photo.frame = CGRectMake(6, 0, 151, 180);
+        UIImage *p = [UIImage imageNamed:[photos objectAtIndex:indexPath.row]];
+        UIImageView *photo = [[UIImageView alloc] initWithImage:p];
+        
+        NSLog(@"height is:%f", [self getHeight:p withWidth:151]);
+        photo.frame = CGRectMake(6, 0, 151, [self getHeight:p withWidth:151]);
         photo.tag = 5;
         [cell addSubview:photo];
 	}
+    NSLog(@"memory");
 
     cell.textLabel.text = [photos objectAtIndex:indexPath.row];
-    //cell.textLabel.textColor = [UIColor whiteColor];
     
 	return cell;
 }
