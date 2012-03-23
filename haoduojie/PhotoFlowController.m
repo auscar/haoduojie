@@ -9,6 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "PhotoFlowController.h"
 
+#import "Constants.h"
 #import "MyFavStreetsViewController.h"
 #import "MyStreetsViewController.h"
 #import "PhotoFlow.h"
@@ -79,8 +80,6 @@
     CGPoint p = [r locationInView:r.view];
     //table1.center = p;
     table1.contentOffset = CGPointMake(6, -p.y);
-    
-    NSLog(@"swipe....");
 }
 
 
@@ -96,8 +95,6 @@
     // Do any additional setup after loading the view from its nib.
    
     
-    NSLog(@"难道都是假象！！！？");
-    
     [self.bottomBoard addSubview:myOwnStreets.view];
     [self.bottomBoard addSubview:myFavStreets.view];
     //[self.view insertSubview:myFavStreets.view atIndex:1];
@@ -110,14 +107,13 @@
     UIImageView *logoImgView = [[UIImageView alloc] initWithImage:logoImg];
     
     //navigationBar上的titleView
-    UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0,0,logoImg.size.width, logoImg.size.height)];
+    UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0,0,logoImgView.frame.size.width, logoImgView.frame.size.height)];
     
     [titleView addSubview:logoImgView];
     logoImgView.center = titleView.center;
     
     self.tabBarController.navigationItem.titleView = titleView;
-    
-    
+        
     UIImage *logoImg2 = [UIImage imageNamed:@"haoduojie-logo.png"];
     UIImageView *toolBarLogoImgView = [[UIImageView alloc] initWithImage:logoImg2];
     toolBarLogoImgView.center = self.toolBar.center;
@@ -146,18 +142,20 @@
     shadow2.endPoint = CGPointMake(1.0, 0.8);
     shadow2.opacity = 0.3f;
     
-    /*
-    [shadow setShadowOffset:CGSizeMake(5, 5)];
-    [shadow setShadowRadius:6];
-    [shadow setShadowOpacity:1]; 
-    [shadow setShadowColor:[UIColor blueColor].CGColor];
-     */
-    
     //bottomShadow.alpha = 0.6;
     
     [self.photoFlowBoard.layer addSublayer:shadow];
     [self.photoFlowBoard.layer insertSublayer:shadow2 atIndex:0];
     //[self.photoFlowBoard.layer addSublayer:shadow2];
+    
+    NSString* url_pyh = [[NSString alloc] initWithFormat:@"%@/street/123/goodsList",apiUri];
+    //发一个请求玩玩
+    //[self loadFromURL:[[NSString alloc] initWithFormat:@"http://%@/street/123/goodsList",apiUri]];
+    [self.flower loadFromURL:url_pyh];
+    
+    //传入photoFlowController, 当tableCell被点击的时候需要photoFlow完成一些操作
+    [myFavStreets setPhotoFlowController:self];
+    [myOwnStreets setPhotoFlowController:self];
     
 }
 
@@ -296,6 +294,23 @@
         [self slideToRight];
     }
 }
+
+-(void)loadFlowContentFrom:(NSString *)url{
+    //首先slideback
+    [self slideBack];
+    
+    //然后flower加载url的数据
+    [self.flower loadFromURL:url];
+}
+-(void)loadFlowContentFrom:(NSString *)url withTitle:(NSString *)title{
+    [self loadFlowContentFrom:url];
+    
+    //设置一下title
+    
+    
+}
+
+
 #pragma mark - delegate
 -(void) scrollViewDidScroll:(UIScrollView *)scrollView{
     NSLog(@"scrollview scroll...");

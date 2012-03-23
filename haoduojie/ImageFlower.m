@@ -15,7 +15,7 @@
 #
 #import "SBJson.h"
 
-#define webRoot @"api.haoduojie.com"
+
 
 @implementation ImageFlower
 
@@ -80,7 +80,7 @@
     [self loadArray];
 }
 
-
+/*
 -(void)request{
     NSLog(@"异步获街道的flow数据");
     NSURL *url = [[NSURL alloc] initWithString:[[NSString alloc] initWithFormat:@"http://%@/street/123/goodsList",webRoot]];
@@ -90,16 +90,30 @@
     req.didFailSelector = @selector(didFailRequest:);
     [req startSynchronous];
 }
+ */
+-(void)loadFromURL:(NSString *)url{
+    NSLog(@"异步获街道的flow数据 %@", url);
+    NSURL *uri = [[NSURL alloc] initWithString:url];
+    ASIHTTPRequest *req = [ASIHTTPRequest requestWithURL:uri];
+    req.delegate = self;
+    req.didFinishSelector = @selector(didFinishRequest:);
+    req.didFailSelector = @selector(didFailRequest:);
+    [req startSynchronous];
+    
+    [uri release];
+}
+/*
 -(void) loadArrayAction:(id)sender{
     //[self loadArray];
     [self request];
 }
+ */
 - (void)viewDidLoad
 {
-    //imgf = [[ImageFlow alloc] init];
     imgf = [[ImageFlow alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height)];
-    //发一个请求玩玩
-    [self request];
+    
+    //[self request];
+    
     [self.view addSubview:imgf.view];
     [super viewDidLoad];
     

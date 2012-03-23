@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class PhotoFlowController;
 @interface MyStreetsViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource>{
     NSArray *streetInfos;
 }
+@property (nonatomic,retain) PhotoFlowController* photoFlowController;
 
 @end

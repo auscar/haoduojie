@@ -41,6 +41,9 @@
 @property (retain, nonatomic) IBOutlet PhotoFlow *pf1;
 @property (retain, nonatomic) IBOutlet PhotoFlow *pf2;
 
+-(void) loadFlowContentFrom:(NSString*)url;
+-(void) loadFlowContentFrom:(NSString *)url withTitle:(NSString*)title;
+
 - (IBAction)ownBtnTapped:(id)sender;
 - (IBAction)favBtnTapped:(id)sender;
 

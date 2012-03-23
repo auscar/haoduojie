@@ -13,6 +13,7 @@
     NSMutableArray* demoArray;
 }
 
--(IBAction)loadArrayAction:(id)sender;
+//-(IBAction)loadArrayAction:(id)sender;
+-(void)loadFromURL:(NSString*)url;
 
 @end

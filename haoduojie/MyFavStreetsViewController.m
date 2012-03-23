@@ -13,18 +13,9 @@
 #import "ASIHTTPRequest.h"
 @implementation MyFavStreetsViewController
 
-
+@synthesize photoFlowController;
 
 -(void) loadArray{
-    /*
-    NSLog(@"imgf.images的长度是%d", [imgf.images count]);
-    for (int i=0; i<[imgf.images count]; i++) {
-        //TODO: 字符串的url地址才去下载, 调试方便可以去掉
-        if ([[imgf.images objectAtIndex:i] isKindOfClass:[NSString class]]) {
-            [self download:[imgf.images objectAtIndex:i] withIndex:i];
-        }
-    }
-     */
 }
 
 
@@ -36,9 +27,6 @@
     //获取服务器返回的数据, 此时这些图片都还是只是一个url
     streetInfos = [[NSMutableArray alloc] initWithArray:[obj objectForKey:@"streets"]];
     NSLog(@"用户有%d条街道", [streetInfos count]);
-    
-    //好, 请求图片
-    //[self loadArray];
 }
 
 
@@ -52,7 +40,6 @@
     [req startSynchronous];
 }
 -(void) loadArrayAction:(id)sender{
-    //[self loadArray];
     [self request];
 }
 
@@ -60,16 +47,10 @@
 
 - (void)viewDidLoad
 {
-    //streetInfos = [[NSArray alloc] initWithObjects:@"天上人街", @"知心姐街",@"北京IT人士闲置数码街",@"广州美食街",@"悠悠慢生活",@"单向街", nil];
+    
     [self request];
     //初始化一下表格的宽度
     self.tableView.frame = CGRectMake(0, 0, 290, 416);
-    
-    
-    
-    
-    
-    
     
     
     //backgroud texture
@@ -77,9 +58,6 @@
     //self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"jie-bg.png"]];
     //[self.view insertSubview:bg atIndex:0];
     //[self.view addSubview:bg];
-
-    
-    
     
     [super viewDidLoad];
 }
@@ -100,7 +78,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        
     }
     return self;
 }
@@ -119,7 +97,16 @@
 
 // Called after the user changes the selection.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSDictionary* info = [streetInfos objectAtIndex:[indexPath row]];
+    
+    NSString* url = [[NSString alloc] initWithFormat:@"%@/street/%@/goodsList",apiUri, [info objectForKey:@"streetId"]];
+    //photoFlow加载数据
+    [photoFlowController loadFlowContentFrom:url];
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    [url release];
+    
 }
 
 #pragma mark - UITableView datasource
@@ -163,16 +150,6 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	}
     
-    
-    //UIView* head = [cell viewWithTag:3];
-    /*
-    head.layer.borderWidth = 1.0f;
-    head.layer.borderColor = [UIColor grayColor].CGColor;
-     */
-    //cell.textLabel.text = [streetInfos objectAtIndex:indexPath.row];
-    //cell.textLabel.textColor = [UIColor whiteColor];
-    
 	return cell;
 }
-
 @end
