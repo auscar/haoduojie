@@ -7,16 +7,29 @@
 //
 
 #import "FlowBoard.h"
+#import "Constants.h"
 
 @implementation FlowBoard
+@synthesize flower;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        
     }
     return self;
+}
+
+-(void)loadFromURL:(NSString *)url withTitle:(NSString *)title{
+    NSLog(@"让flowBoard加载%@", url);
+    //[flower loadFromURL:[[NSString alloc] initWithFormat:@"%@/street/123/goodsList"]];
+    [flower loadFromURL:url];
+    
+    self.title = title;
+    
+    [url release];
 }
 
 - (void)didReceiveMemoryWarning
@@ -28,7 +41,11 @@
 }
 
 #pragma mark - View lifecycle
-
+-(void)viewWillAppear:(BOOL)animated{
+    //self.title = @"dddd";
+    
+    [super viewWillAppear:animated];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];

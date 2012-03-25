@@ -16,19 +16,14 @@
 
 #define kTriggerOffSet 100.0f
 
-
+/*
 @implementation UINavigationBar (CustomImage)
 - (void)drawRect:(CGRect)rect {
     UIImage *image = [UIImage imageNamed: @"navigationBarBackgroundRetro.png"];
     [image drawInRect:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
 }
 @end
-@implementation UIToolbar (CustomImage)
-- (void)drawRect:(CGRect)rect {
-    UIImage *image = [UIImage imageNamed: @"navigationBarBackgroundRetro.png"];
-    [image drawInRect:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
-}
-@end
+*/
 
 //@class PhotoFlow;
 
@@ -102,7 +97,7 @@
     [self allHide];    
     
     //外观的一些定制logo啊之类的:
-    
+    /*
     UIImage *logoImg = [UIImage imageNamed:@"haoduojie-logo.png"];
     UIImageView *logoImgView = [[UIImageView alloc] initWithImage:logoImg];
     
@@ -118,7 +113,7 @@
     UIImageView *toolBarLogoImgView = [[UIImageView alloc] initWithImage:logoImg2];
     toolBarLogoImgView.center = self.toolBar.center;
     [self.toolBar addSubview:toolBarLogoImgView];
-    
+    */
     
     //阴影
     CGColorRef darkColor = [[UIColor blackColor] colorWithAlphaComponent:.3f].CGColor;  

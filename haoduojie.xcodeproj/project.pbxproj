@@ -29,6 +29,7 @@
 		E90DEF9F15006ACE0041C559 /* AccountController.m in Sources */ = {isa = PBXBuildFile; fileRef = E90DEF9D15006ACE0041C559 /* AccountController.m */; };
 		E90DEFA015006ACE0041C559 /* AccountController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E90DEF9E15006ACE0041C559 /* AccountController.xib */; };
 		E911E2A4150C6D2C007F5F93 /* jie-bg2.png in Resources */ = {isa = PBXBuildFile; fileRef = E911E2A3150C6D2C007F5F93 /* jie-bg2.png */; };
+		E91EF649151F16B200A692B3 /* DiscoverButton.m in Sources */ = {isa = PBXBuildFile; fileRef = E91EF648151F16B200A692B3 /* DiscoverButton.m */; };
 		E944F7BC14FC87CE00DD5DE4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E944F7BB14FC87CE00DD5DE4 /* UIKit.framework */; };
 		E944F7BE14FC87CE00DD5DE4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E944F7BD14FC87CE00DD5DE4 /* Foundation.framework */; };
 		E944F7C014FC87CE00DD5DE4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E944F7BF14FC87CE00DD5DE4 /* CoreGraphics.framework */; };
@@ -39,6 +40,9 @@
 		E96B91C6151B2DB800E2E96F /* StreetCell-my.xib in Resources */ = {isa = PBXBuildFile; fileRef = E96B91C5151B2DB800E2E96F /* StreetCell-my.xib */; };
 		E96B91CF151C327100E2E96F /* FlowBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = E96B91CD151C327100E2E96F /* FlowBoard.m */; };
 		E96B91D0151C327100E2E96F /* FlowBoard.xib in Resources */ = {isa = PBXBuildFile; fileRef = E96B91CE151C327100E2E96F /* FlowBoard.xib */; };
+		E96B91D8151CDCCF00E2E96F /* HTTP.m in Sources */ = {isa = PBXBuildFile; fileRef = E96B91D7151CDCCE00E2E96F /* HTTP.m */; };
+		E96B91DA151CE2AB00E2E96F /* DiscoverCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E96B91D9151CE2AA00E2E96F /* DiscoverCell.xib */; };
+		E96B91DD151E028F00E2E96F /* DicoverTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E96B91DC151E028F00E2E96F /* DicoverTableCell.m */; };
 		E9755CEB1509CFD300E062BC /* 17.png in Resources */ = {isa = PBXBuildFile; fileRef = E9755CEA1509CFD300E062BC /* 17.png */; };
 		E98AA7231503B4F1008B2B93 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E98AA7221503B4F1008B2B93 /* MainWindow.xib */; };
 		E9A9B9FC1505B74100B1B55C /* 14-tag.png in Resources */ = {isa = PBXBuildFile; fileRef = E9A9B9F51505B74100B1B55C /* 14-tag.png */; };
@@ -136,6 +140,8 @@
 		E90DEF9D15006ACE0041C559 /* AccountController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountController.m; sourceTree = "<group>"; };
 		E90DEF9E15006ACE0041C559 /* AccountController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccountController.xib; sourceTree = "<group>"; };
 		E911E2A3150C6D2C007F5F93 /* jie-bg2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jie-bg2.png"; sourceTree = "<group>"; };
+		E91EF647151F16B100A692B3 /* DiscoverButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscoverButton.h; sourceTree = "<group>"; };
+		E91EF648151F16B200A692B3 /* DiscoverButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscoverButton.m; sourceTree = "<group>"; };
 		E944F7B714FC87CE00DD5DE4 /* haoduojie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = haoduojie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E944F7BB14FC87CE00DD5DE4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E944F7BD14FC87CE00DD5DE4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -151,6 +157,11 @@
 		E96B91CC151C327000E2E96F /* FlowBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlowBoard.h; sourceTree = "<group>"; };
 		E96B91CD151C327100E2E96F /* FlowBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlowBoard.m; sourceTree = "<group>"; };
 		E96B91CE151C327100E2E96F /* FlowBoard.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FlowBoard.xib; sourceTree = "<group>"; };
+		E96B91D6151CDCCE00E2E96F /* HTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTP.h; sourceTree = "<group>"; };
+		E96B91D7151CDCCE00E2E96F /* HTTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTP.m; sourceTree = "<group>"; };
+		E96B91D9151CE2AA00E2E96F /* DiscoverCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiscoverCell.xib; sourceTree = "<group>"; };
+		E96B91DB151E028F00E2E96F /* DicoverTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DicoverTableCell.h; sourceTree = "<group>"; };
+		E96B91DC151E028F00E2E96F /* DicoverTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DicoverTableCell.m; sourceTree = "<group>"; };
 		E9755CEA1509CFD300E062BC /* 17.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 17.png; sourceTree = "<group>"; };
 		E98AA7221503B4F1008B2B93 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		E9A9B9F51505B74100B1B55C /* 14-tag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "14-tag.png"; sourceTree = "<group>"; };
@@ -316,7 +327,7 @@
 			isa = PBXGroup;
 			children = (
 				E9BF8D41151835EC00B7FBEF /* lib */,
-				E9F97A21150CDE6D0049DD60 /* model */,
+				E9F97A21150CDE6D0049DD60 /* common */,
 				E90DEF8514FFC5B10041C559 /* delegate */,
 				E944F7DA14FC983000DD5DE4 /* img */,
 				E944F7D914FC88D800DD5DE4 /* xib */,
@@ -377,6 +388,7 @@
 				E98AA7221503B4F1008B2B93 /* MainWindow.xib */,
 				E9C19C5B15185285007DA489 /* StreetCell.xib */,
 				E96B91CE151C327100E2E96F /* FlowBoard.xib */,
+				E96B91D9151CE2AA00E2E96F /* DiscoverCell.xib */,
 			);
 			name = xib;
 			sourceTree = "<group>";
@@ -423,6 +435,8 @@
 				E9C19C741518A7B8007DA489 /* Constants.h */,
 				E9C19C751518B4CF007DA489 /* ImageLoader.h */,
 				E9C19C761518B4CF007DA489 /* ImageLoader.m */,
+				E96B91D6151CDCCE00E2E96F /* HTTP.h */,
+				E96B91D7151CDCCE00E2E96F /* HTTP.m */,
 			);
 			name = lib;
 			sourceTree = "<group>";
@@ -511,11 +525,15 @@
 			name = head;
 			sourceTree = "<group>";
 		};
-		E9F97A21150CDE6D0049DD60 /* model */ = {
+		E9F97A21150CDE6D0049DD60 /* common */ = {
 			isa = PBXGroup;
 			children = (
+				E96B91DB151E028F00E2E96F /* DicoverTableCell.h */,
+				E96B91DC151E028F00E2E96F /* DicoverTableCell.m */,
+				E91EF647151F16B100A692B3 /* DiscoverButton.h */,
+				E91EF648151F16B200A692B3 /* DiscoverButton.m */,
 			);
-			name = model;
+			name = common;
 			sourceTree = "<group>";
 		};
 		E9F97A26150D01230049DD60 /* example */ = {
@@ -643,6 +661,7 @@
 				E9C19C7315188A1F007DA489 /* tiny_x7h5_142806e019118.jpg in Resources */,
 				E96B91C6151B2DB800E2E96F /* StreetCell-my.xib in Resources */,
 				E96B91D0151C327100E2E96F /* FlowBoard.xib in Resources */,
+				E96B91DA151CE2AB00E2E96F /* DiscoverCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -689,6 +708,9 @@
 				E9BF8D93151836E000B7FBEF /* ASINetworkQueue.m in Sources */,
 				E9C19C771518B4CF007DA489 /* ImageLoader.m in Sources */,
 				E96B91CF151C327100E2E96F /* FlowBoard.m in Sources */,
+				E96B91D8151CDCCF00E2E96F /* HTTP.m in Sources */,
+				E96B91DD151E028F00E2E96F /* DicoverTableCell.m in Sources */,
+				E91EF649151F16B200A692B3 /* DiscoverButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

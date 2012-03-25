@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DiscoverController : UIViewController
-
+@interface DiscoverController : UIViewController<UITableViewDelegate,UITableViewDataSource>{
+    NSArray* discoverList;
+    NSArray* streetInfos;
+}
+@property (nonatomic, retain) IBOutlet UITableView* table;
 @end

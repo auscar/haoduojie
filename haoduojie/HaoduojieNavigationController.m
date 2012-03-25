@@ -8,12 +8,21 @@
 
 #import "HaoduojieNavigationController.h"
 
+
 @implementation UINavigationBar (CustomImage)
 - (void)drawRect:(CGRect)rect {
     UIImage *image = [UIImage imageNamed: @"navigationBarBackgroundRetro.png"];
     [image drawInRect:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
 }
 @end
+
+@implementation UIToolbar (CustomImage)
+- (void)drawRect:(CGRect)rect {
+    UIImage *image = [UIImage imageNamed: @"navigationBarBackgroundRetro.png"];
+    [image drawInRect:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+}
+@end
+
 
 @implementation HaoduojieNavigationController
 

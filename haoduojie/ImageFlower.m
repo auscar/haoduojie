@@ -100,7 +100,7 @@
     req.didFailSelector = @selector(didFailRequest:);
     [req startSynchronous];
     
-    [uri release];
+    //[uri release];
 }
 /*
 -(void) loadArrayAction:(id)sender{
