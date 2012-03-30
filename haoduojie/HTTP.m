@@ -35,15 +35,20 @@
 +(void) loadUsingSrc:(NSString*)src usingBlock:(LoadedBlock)block{
     NSLog(@"异步请求:%@",src);
     NSURL *uri = [[NSURL alloc] initWithString:src];
-    ASIHTTPRequest *req = [ASIHTTPRequest requestWithURL:uri];
+    __block ASIHTTPRequest *req = [ASIHTTPRequest requestWithURL:uri];
+    [req setCompletionBlock:^{
+        block(req);
+    }];
+    /*
     req.delegate = [HTTP class];
     req.didFinishSelector = @selector(didFinishRequest:);
     //这个userInfo是不是该realease呀？
     req.userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:block,@"block", nil];
     //req.didFailSelector = @selector(didFinishRequest:);
+     */
     [req setDownloadCache:[ASIDownloadCache sharedCache]];
     [req setCachePolicy:ASIOnlyLoadIfNotCachedCachePolicy];//缓存策略是仅使用缓存的数据, 不再向服务器发请求
-    [req startSynchronous];
+    [req startAsynchronous];
     
     //[uri release];
     //[req release];

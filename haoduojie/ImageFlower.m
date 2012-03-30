@@ -7,15 +7,17 @@
 //
 
 
-#import "ImageFlower.h"
-#import "ImageFlow.h"
+
 #import "ASIHTTPRequest.h"
 #import "ASIDownloadCache.h"
 #import "ASICacheDelegate.h"
-#
 #import "SBJson.h"
 
-
+#import "ImageFlower.h"
+#import "ImageFlow.h"
+#import "ImageLoader.h"
+#import "ImageFlowerButton.h"
+#import "Good.h"
 
 @implementation ImageFlower
 
@@ -25,72 +27,42 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-#pragma mark - View lifecycle
--(void) download:(NSString*)url withIndex:(int)index{
+-(CGFloat) getHeight:(UIImage *)image withWidth:(CGFloat)width{
+    if(!image)return 0.0f;
     
-    NSLog(@"异步获取图片data");
-    NSURL *uri = [[NSURL alloc] initWithString:url];
-    ASIHTTPRequest *req = [ASIHTTPRequest requestWithURL:uri];
-    req.delegate = self;
-    req.didFinishSelector = @selector(didFinishDownload:);
-    req.username = [NSString stringWithFormat:@"%d",index];
-    req.didFailSelector = @selector(didFailDownload:);
-    [req setDownloadCache:[ASIDownloadCache sharedCache]];
-    [req setCachePolicy:ASIOnlyLoadIfNotCachedCachePolicy];//缓存策略是仅使用缓存的数据, 不再向服务器发请求
-    [req startSynchronous];
-}
--(void)didFinishDownload:(ASIHTTPRequest*)req{
-    NSLog(@"图片%@ 有返回, ta的index是%@",[req.url absoluteString], req.username);
-    int index = [req.username intValue];
+    CGFloat rate = image.size.height/image.size.width;
     
+    return floor(width*rate);
     
-    //NSLog(@"请求的状态码是%d", [req responseStatusCode] );
-    NSData *imageDate = [req responseData];
-    UIImage *image = [UIImage imageWithData:imageDate];
-    if(image != nil){
-        [imgf.images replaceObjectAtIndex:index withObject:image];
-        [imgf loadData];
-    }else{
-        NSLog(@"         没有图片数据..................");
-    }
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
--(void) loadArray{
-    NSLog(@"imgf.images的长度是%d", [imgf.images count]);
-    for (int i=0; i<[imgf.images count]; i++) {
-        //TODO: 字符串的url地址才去下载, 调试方便可以去掉
-        if ([[imgf.images objectAtIndex:i] isKindOfClass:[NSString class]]) {
-            [self download:[imgf.images objectAtIndex:i] withIndex:i];
-        }
-    }
-}
-
-
 -(void) didFinishRequest:(ASIHTTPRequest *)req{
     NSLog(@"图片%@ 有返回",[req.url absoluteString]);
     NSLog(@"请求的状态码是%d", [req responseStatusCode] );
     NSLog(@"%@", [req responseString]);
     NSDictionary* obj = [[req responseString] JSONValue];
-    //获取服务器返回的数据, 此时这些图片都还是只是一个url
-    imgf.images = [[NSMutableArray alloc] initWithArray:[obj objectForKey:@"flow"]];
-    [imgf loadData];//首次渲染, 都是一些框框
-    NSLog(@"flow 的长度是%d", [imgf.images count]);
     
-    //好, 请求这些图片
-    [self loadArray];
+    NSArray* flow =  (NSArray*)[obj objectForKey:@"flow"];
+    //获取服务器返回的数据, 此时这些图片都还是只是一个url
+    //imgf.images = [[NSMutableArray alloc] initWithArray:flow];
+    
+    NSLog(@"服务器返回的数组的长度是: %d",[flow count]);
+    
+    items = [[NSMutableArray alloc] initWithArray:flow];
+    images = [[NSMutableArray alloc] init];
+    
+    for (int i = 0; i<[items count]; i++) {
+        [images addObject:[NSNumber numberWithInt:0]];
+    }
+    
+    //取得了所需要的数据之后, init ImageFlow, 这样相关的ImageFlowDataSource代理方法将会被执行 
+    
+    [imgf loadData];//计算位置, 然后显示flow内的view
+    
+    
+    //NSLog(@"flow 的长度是%d", [imgf.images count]);
+    
 }
 
-/*
--(void)request{
-    NSLog(@"异步获街道的flow数据");
-    NSURL *url = [[NSURL alloc] initWithString:[[NSString alloc] initWithFormat:@"http://%@/street/123/goodsList",webRoot]];
-    ASIHTTPRequest *req = [ASIHTTPRequest requestWithURL:url];
-    req.delegate = self;
-    req.didFinishSelector = @selector(didFinishRequest:);
-    req.didFailSelector = @selector(didFailRequest:);
-    [req startSynchronous];
-}
- */
 -(void)loadFromURL:(NSString *)url{
     NSLog(@"异步获街道的flow数据 %@", url);
     NSURL *uri = [[NSURL alloc] initWithString:url];
@@ -99,24 +71,79 @@
     req.didFinishSelector = @selector(didFinishRequest:);
     req.didFailSelector = @selector(didFailRequest:);
     [req startSynchronous];
+}
+-(void)flowCellTapped:(id)sender{
+    ImageFlowerButton* btn = (ImageFlowerButton*)sender;
+    NSLog(@"%d, %@", btn.good.streetId, btn.good.streetName);
     
-    //[uri release];
+    //展示物品详细
+    
 }
-/*
--(void) loadArrayAction:(id)sender{
-    //[self loadArray];
-    [self request];
+
+#pragma mark - ImageFlowDelegate, ImageFlowDataSource
+-(int)imageFlow:(ImageFlow *)flow heightForIndex:(int)index{
+    if ([[images objectAtIndex:index] isKindOfClass:[NSNumber class]]) {
+        return 180;
+    }else{
+        return [self getHeight:(UIImage*)[images objectAtIndex:index] withWidth:151];
+    }
 }
- */
+
+-(UIView*)imageFlow:(ImageFlow *)flow viewForIndex:(int)index{
+    ImageFlowerButton* btn = (ImageFlowerButton*)[flow getCacheViewForIndex:index];
+    
+    //UIButton* btn = (UIButton*)[flow getCacheViewForIndex:index];
+    NSDictionary* obj = [items objectAtIndex:index];
+    if (btn == nil) {
+        btn = [[ImageFlowerButton alloc] init];
+        Good* good = [[Good alloc] init];
+        //btn = [[UIButton alloc] init];
+        //[btn setImage:[UIImage imageNamed:@"14.jpg"] forState:UIControlStateNormal];
+        [good setGoodId:[[obj objectForKey:@"goodId"] intValue]];
+        [good setGoodId:[[obj objectForKey:@"ownerId"] intValue]];
+        [good setStreetId:[[obj objectForKey:@"streetId"] intValue]];
+        
+        [good setStreetName:[obj objectForKey:@"streetName"]];
+        [good setStreetName:[obj objectForKey:@"ownerName"]];
+        [good setStreetName:[obj objectForKey:@"streetName"]];
+        
+        [btn setGood:good];
+
+        btn.enabled = YES;
+        
+        [btn addTarget:self action:@selector(flowCellTapped:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [good release];
+    }
+    
+    if ([[images objectAtIndex:index] isKindOfClass:[NSNumber class]]) {
+        [ImageLoader loadImageUsingSrc:[obj objectForKey:@"goodImg"] usingBlock:^(UIImage* image){
+            [btn setImage:image forState:UIControlStateNormal];
+            [images replaceObjectAtIndex:index withObject:image];//记录下来说这个图片已经加载了
+            //再重新显示一下
+            [imgf loadData];
+        }];
+    }else{
+        [btn setImage:[images objectAtIndex:index] forState:UIControlStateNormal];
+    }
+    
+    return btn;
+}
+-(int)countOfItems{
+    return [items count];
+}
+
+
+
+
+#pragma mark - View lifecycle
 - (void)viewDidLoad
 {
-    imgf = [[ImageFlow alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height)];
-    
-    //[self request];
-    
-    [self.view addSubview:imgf.view];
     [super viewDidLoad];
-    
+    imgf = [[ImageFlow alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height)];
+    //imgf = [[ImageFlow alloc] initWithFrame:self.view.frame];
+    imgf.delegate = self;
+    [self.view addSubview:imgf.view];
 }
 
 - (void)viewDidUnload

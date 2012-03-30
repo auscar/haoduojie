@@ -16,15 +16,6 @@
 
 #define kTriggerOffSet 100.0f
 
-/*
-@implementation UINavigationBar (CustomImage)
-- (void)drawRect:(CGRect)rect {
-    UIImage *image = [UIImage imageNamed: @"navigationBarBackgroundRetro.png"];
-    [image drawInRect:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
-}
-@end
-*/
-
 //@class PhotoFlow;
 
 @implementation PhotoFlowController
@@ -73,7 +64,6 @@
 -(void)onDrag:(UIPanGestureRecognizer*)r{
     
     CGPoint p = [r locationInView:r.view];
-    //table1.center = p;
     table1.contentOffset = CGPointMake(6, -p.y);
 }
 
@@ -92,28 +82,7 @@
     
     [self.bottomBoard addSubview:myOwnStreets.view];
     [self.bottomBoard addSubview:myFavStreets.view];
-    //[self.view insertSubview:myFavStreets.view atIndex:1];
-    //[self.view insertSubview:myOwnStreets.view atIndex:0];
     [self allHide];    
-    
-    //外观的一些定制logo啊之类的:
-    /*
-    UIImage *logoImg = [UIImage imageNamed:@"haoduojie-logo.png"];
-    UIImageView *logoImgView = [[UIImageView alloc] initWithImage:logoImg];
-    
-    //navigationBar上的titleView
-    UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0,0,logoImgView.frame.size.width, logoImgView.frame.size.height)];
-    
-    [titleView addSubview:logoImgView];
-    logoImgView.center = titleView.center;
-    
-    self.tabBarController.navigationItem.titleView = titleView;
-        
-    UIImage *logoImg2 = [UIImage imageNamed:@"haoduojie-logo.png"];
-    UIImageView *toolBarLogoImgView = [[UIImageView alloc] initWithImage:logoImg2];
-    toolBarLogoImgView.center = self.toolBar.center;
-    [self.toolBar addSubview:toolBarLogoImgView];
-    */
     
     //阴影
     CGColorRef darkColor = [[UIColor blackColor] colorWithAlphaComponent:.3f].CGColor;  

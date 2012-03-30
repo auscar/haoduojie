@@ -7,8 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ImageFlowDelegate.h"
+#import "ImageFlowDataSource.h"
 
 @interface ImageFlow : NSObject<UIScrollViewDelegate>{
+    id<ImageFlowDelegate, ImageFlowDataSource> delegate;
+    
     UIView* view;
     
     UIScrollView* scrollview;
@@ -29,15 +33,18 @@
     //NSArray* imagePos1;//每一个张图片在页面上的位置
     //NSArray* imagePos2;//每一个张图片在页面上的位置
 }
-
+@property (nonatomic, retain) id delegate;
 @property (nonatomic, retain) NSArray* images;
 @property (nonatomic, retain) UIView* view;
+
 
 -(void) calculatePosition;
 -(void) logImagePos;
 -(void) check;
--(UIImageView*) imageViewForFlowIndex:(int)index withImage:(id)image;
--(void) pinImage:(UIImage*)image withIndex:(int)index;
+//-(UIImageView*) imageViewForFlowIndex:(int)index withImage:(id)image;
+//-(void) pinImage:(UIImage*)image withIndex:(int)index;
+-(void) pinView:(UIView*)view withIndex:(int)index;
+-(UIView*)getCacheViewForIndex:(int)index;
 -(void) removeCellForIndex:(int)index;
 -(void) setCellForIndex:(int)index;
 -(void) toFit;

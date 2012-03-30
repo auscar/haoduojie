@@ -114,7 +114,7 @@
     if (cell == nil) {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"StreetCell-my" owner:self options:nil];
         if([nib count] > 0){
-            NSLog(@"加载到xib");
+            //NSLog(@"加载到xib");
             cell = [nib lastObject];
         }else{
             NSLog(@"faild to load custom xib");

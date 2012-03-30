@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ImageFlowDataSource.h"
+#import "ImageFlowDelegate.h"
 @class ImageFlow;
-@interface ImageFlower : UIViewController{
+@interface ImageFlower : UIViewController<ImageFlowDelegate, ImageFlowDataSource>{
     ImageFlow* imgf;
-    NSMutableArray* demoArray;
+    NSMutableArray* items;
+    NSMutableArray* images;
 }
 
 //-(IBAction)loadArrayAction:(id)sender;
