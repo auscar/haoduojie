@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Good.h"
-@interface GoodDetailController : UIViewController {
+@interface GoodDetailController : UIViewController<UITableViewDelegate, UITableViewDataSource> {
     UIImageView *ownerHead;
     UILabel *ownerName;
     UILabel *goodName;
@@ -17,6 +17,9 @@
     UILabel *goodFrom;
     UITableView *goodCommentList;
     UILabel *price;
+    UITableView *commentTable;
+    
+    NSArray* commentArray;
 }
 
 
@@ -29,5 +32,6 @@
 @property (retain, nonatomic) IBOutlet UILabel *goodFrom;
 @property (retain, nonatomic) IBOutlet UITableView *goodCommentList;
 @property (retain, nonatomic) IBOutlet UILabel *price;
+@property (retain, nonatomic) IBOutlet UITableView *commentTable;
 
 @end
