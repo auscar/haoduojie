@@ -10,9 +10,10 @@
 #import "MyFavStreetsViewController.h"
 #import "MyStreetsViewController.h"
 #import "PhotoFlow.h"
+#import "ImageFlowerDelegate.h"
 
 @class ImageFlower;
-@interface PhotoFlowController : UIViewController<UITabBarControllerDelegate,UIScrollViewDelegate>{
+@interface PhotoFlowController : UIViewController<UITabBarControllerDelegate,UIScrollViewDelegate,ImageFlowerDelegate>{
     CGPoint touchBeganPoint;
     NSArray *photos;
     

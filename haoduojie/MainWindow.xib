@@ -48,6 +48,7 @@
 				<int key="NSvFlags">292</int>
 				<string key="NSFrameSize">{320, 480}</string>
 				<reference key="NSSuperview"/>
+				<reference key="NSNextKeyView"/>
 				<string key="NSReuseIdentifierKey">_NS:407</string>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">1</int>
@@ -73,7 +74,7 @@
 						<string key="IBUITitle">账号</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">192-credit-card.png</string>
+							<string key="NSResourceName">19-gear.png</string>
 						</object>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
@@ -163,6 +164,7 @@
 					<int key="NSvFlags">266</int>
 					<string key="NSFrame">{{0, 431}, {320, 49}}</string>
 					<reference key="NSSuperview"/>
+					<reference key="NSNextKeyView"/>
 					<string key="NSReuseIdentifierKey">_NS:464</string>
 					<object class="NSColor" key="IBUIBackgroundColor">
 						<int key="NSColorSpace">3</int>
@@ -470,7 +472,7 @@
 				<string>09-chat-2.png</string>
 				<string>112-group.png</string>
 				<string>163-glasses-1.png</string>
-				<string>192-credit-card.png</string>
+				<string>19-gear.png</string>
 				<string>86-camera.png</string>
 			</object>
 			<object class="NSMutableArray" key="dict.values">
@@ -478,7 +480,7 @@
 				<string>{24, 22}</string>
 				<string>{32, 21}</string>
 				<string>{30, 23}</string>
-				<string>{28, 18}</string>
+				<string>{26, 26}</string>
 				<string>{24, 18}</string>
 			</object>
 		</object>

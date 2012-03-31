@@ -13,10 +13,18 @@
 @synthesize goodId;
 @synthesize ownerId;
 @synthesize streetId;
+@synthesize isUserLike;
+@synthesize streetFriendsNum;
+@synthesize likeNum;
+@synthesize price;
 
+@synthesize priceType;
 @synthesize goodName;
 @synthesize ownerName;
 @synthesize streetName;
+@synthesize goodImage;
+@synthesize ownerHead;
+@synthesize goodImageLarge;
 
 - (id)init
 {
@@ -31,6 +39,11 @@
     [streetName release];
     [goodName release];
     [ownerName release];
+    [goodImage release];
+    [priceType release];
+    [ownerHead release];
+    [goodImageLarge release];
+    
     [super dealloc];
 }
 @end

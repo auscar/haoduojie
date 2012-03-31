@@ -13,7 +13,16 @@
 @property int goodId;
 @property int ownerId;
 @property int streetId;
+@property int streetFriendsNum;
+@property int likeNum;
+@property float price;
+@property BOOL isUserLike;
+
+@property (nonatomic, retain) NSString* priceType;
 @property (nonatomic, retain) NSString* goodName;
+@property (nonatomic, retain) NSString* goodImage;
+@property (nonatomic, retain) NSString* goodImageLarge;
 @property (nonatomic, retain) NSString* ownerName;
 @property (nonatomic, retain) NSString* streetName;
+@property (nonatomic, retain) NSString* ownerHead;
 @end

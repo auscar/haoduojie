@@ -12,7 +12,10 @@
 #import "Constants.h"
 #import "MyFavStreetsViewController.h"
 #import "MyStreetsViewController.h"
+#import "GoodDetailController.h"
 #import "PhotoFlow.h"
+#import "ImageFlower.h"
+#import "Good.h"
 
 #define kTriggerOffSet 100.0f
 
@@ -115,13 +118,14 @@
     NSString* url_pyh = [[NSString alloc] initWithFormat:@"%@/street/123/goodsList",apiUri];
     //发一个请求玩玩
     //[self loadFromURL:[[NSString alloc] initWithFormat:@"http://%@/street/123/goodsList",apiUri]];
-    [self.flower loadFromURL:url_pyh];
+    [flower loadFromURL:url_pyh];
     
     //传入photoFlowController, 当tableCell被点击的时候需要photoFlow完成一些操作
     [myFavStreets setPhotoFlowController:self];
     [myOwnStreets setPhotoFlowController:self];
     
 }
+
 
 - (void)viewDidUnload
 {
@@ -268,10 +272,6 @@
 }
 -(void)loadFlowContentFrom:(NSString *)url withTitle:(NSString *)title{
     [self loadFlowContentFrom:url];
-    
-    //设置一下title
-    
-    
 }
 
 
@@ -280,5 +280,19 @@
     NSLog(@"scrollview scroll...");
 }
 
+#pragma mark - ImageFlowerDelegate
+-(void) imageFlower:(ImageFlower *)flower flowerCellDidTappedWithTarget:(id)target{
+    Good* good = (Good*)target;
+    
+    //展示物品详细
+    GoodDetailController* goodDetail = [GoodDetailController alloc];
+    [goodDetail setGood:good];
+    [goodDetail init];
+    
+    goodDetail.title = good.goodName;
+     
+    [self.navigationController pushViewController:goodDetail animated:YES];
+    
+}
 
 @end

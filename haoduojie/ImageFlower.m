@@ -18,8 +18,10 @@
 #import "ImageLoader.h"
 #import "ImageFlowerButton.h"
 #import "Good.h"
+#import "GoodDetailController.h"
 
 @implementation ImageFlower
+@synthesize delegate;
 
 - (void)didReceiveMemoryWarning
 {
@@ -74,9 +76,8 @@
 }
 -(void)flowCellTapped:(id)sender{
     ImageFlowerButton* btn = (ImageFlowerButton*)sender;
-    NSLog(@"%d, %@", btn.good.streetId, btn.good.streetName);
     
-    //展示物品详细
+    [delegate imageFlower:self flowerCellDidTappedWithTarget:btn.good];
     
 }
 
@@ -92,24 +93,28 @@
 -(UIView*)imageFlow:(ImageFlow *)flow viewForIndex:(int)index{
     ImageFlowerButton* btn = (ImageFlowerButton*)[flow getCacheViewForIndex:index];
     
-    //UIButton* btn = (UIButton*)[flow getCacheViewForIndex:index];
     NSDictionary* obj = [items objectAtIndex:index];
     if (btn == nil) {
         btn = [[ImageFlowerButton alloc] init];
         Good* good = [[Good alloc] init];
-        //btn = [[UIButton alloc] init];
-        //[btn setImage:[UIImage imageNamed:@"14.jpg"] forState:UIControlStateNormal];
+        
         [good setGoodId:[[obj objectForKey:@"goodId"] intValue]];
         [good setGoodId:[[obj objectForKey:@"ownerId"] intValue]];
         [good setStreetId:[[obj objectForKey:@"streetId"] intValue]];
+        [good setPrice:[[obj objectForKey:@"price"] floatValue]];
+        [good setLikeNum:[[obj objectForKey:@"likeNum"] intValue]];
         
+        [good setIsUserLike:[[obj objectForKey:@"isUserLike"] boolValue]];
+        
+        [good setGoodImageLarge:[obj objectForKey:@"goodImgLarge"]];
+        [good setPriceType:[obj objectForKey:@"priceType"]];
         [good setStreetName:[obj objectForKey:@"streetName"]];
-        [good setStreetName:[obj objectForKey:@"ownerName"]];
-        [good setStreetName:[obj objectForKey:@"streetName"]];
+        [good setOwnerName:[obj objectForKey:@"ownerName"]];
+        [good setGoodName:[obj objectForKey:@"goodName"]];
+        [good setGoodImage:[obj objectForKey:@"goodImg"]];
+        [good setOwnerHead:[obj objectForKey:@"ownerHead"]];
         
         [btn setGood:good];
-
-        btn.enabled = YES;
         
         [btn addTarget:self action:@selector(flowCellTapped:) forControlEvents:UIControlEventTouchUpInside];
         
