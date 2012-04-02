@@ -85,7 +85,6 @@
 }
 -(void) clearFlow{
     NSArray* svs1 = [trip1 subviews];
-    NSLog(@"trip1 length: %d", [svs1 count]);
     
     if ([svs1 count]) {
         for (int j=0; j<[svs1 count]; j++) {
@@ -100,7 +99,7 @@
     }
 }
 -(void) calculatePosition{
-    NSLog(@"************************************************** cal!!!!!!!!!!!!!!!!");
+    
     //移除所有的view
     [self clearFlow];
     
@@ -177,7 +176,6 @@
     
     // 不在view tree上就插入一个~   
     if (!isIn) {
-        NSLog(@"set cell: %d", index);
         [self pinView:[self.delegate imageFlow:self viewForIndex:index]  withIndex:index];
     }
 }
@@ -209,7 +207,6 @@
     return [imageViewsCache objectForKey:[NSNumber numberWithInt:index]];
 }
 -(void) pinView:(UIView*)itemView withIndex:(int)index{
-    NSLog(@"pin %d", index);
     int x = 0;
     int y;
     int width = 151;
@@ -227,8 +224,6 @@
      */
     
     //itemView = [self.delegate imageFlow:self viewForIndex:index];
-    
-    //NSLog(@"pinView: %@", [[itemView class] description]);
     
     //缓存这个view
     [imageViewsCache setObject:itemView forKey:[NSNumber numberWithInt:index]];

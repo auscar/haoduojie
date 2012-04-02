@@ -76,7 +76,7 @@
 }
 -(void)flowCellTapped:(id)sender{
     ImageFlowerButton* btn = (ImageFlowerButton*)sender;
-    
+    NSLog(@"传给delegate的goodId:%d",btn.good.goodId);
     [delegate imageFlower:self flowerCellDidTappedWithTarget:btn.good];
     
 }
@@ -97,9 +97,8 @@
     if (btn == nil) {
         btn = [[ImageFlowerButton alloc] init];
         Good* good = [[Good alloc] init];
-        
         [good setGoodId:[[obj objectForKey:@"goodId"] intValue]];
-        [good setGoodId:[[obj objectForKey:@"ownerId"] intValue]];
+        [good setOwnerId:[[obj objectForKey:@"ownerId"] intValue]];
         [good setStreetId:[[obj objectForKey:@"streetId"] intValue]];
         [good setPrice:[[obj objectForKey:@"price"] floatValue]];
         [good setLikeNum:[[obj objectForKey:@"likeNum"] intValue]];
@@ -113,9 +112,7 @@
         [good setGoodName:[obj objectForKey:@"goodName"]];
         [good setGoodImage:[obj objectForKey:@"goodImg"]];
         [good setOwnerHead:[obj objectForKey:@"ownerHead"]];
-        
         [btn setGood:good];
-        
         [btn addTarget:self action:@selector(flowCellTapped:) forControlEvents:UIControlEventTouchUpInside];
         
         [good release];

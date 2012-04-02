@@ -28,13 +28,14 @@
     
     NSLog(@"异步获取图片data:%@",src);
     NSURL *uri = [[NSURL alloc] initWithString:src];
-    __block ASIHTTPRequest *req = [ASIHTTPRequest requestWithURL:uri];
+    ASIHTTPRequest *req = [ASIHTTPRequest requestWithURL:uri];
     
     [req setCompletionBlock:^{
         NSLog(@"--------------图片%@ 有返回",[req.url absoluteString]);
         NSData *imageDate = [req responseData];
         UIImage *image = [UIImage imageWithData:imageDate];
-        block(image);        
+        block(image); 
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     }];
     
     [req setDownloadCache:[ASIDownloadCache sharedCache]];

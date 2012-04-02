@@ -38,6 +38,7 @@
     __block ASIHTTPRequest *req = [ASIHTTPRequest requestWithURL:uri];
     [req setCompletionBlock:^{
         block(req);
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     }];
     /*
     req.delegate = [HTTP class];
@@ -47,7 +48,7 @@
     //req.didFailSelector = @selector(didFinishRequest:);
      */
     [req setDownloadCache:[ASIDownloadCache sharedCache]];
-    [req setCachePolicy:ASIOnlyLoadIfNotCachedCachePolicy];//缓存策略是仅使用缓存的数据, 不再向服务器发请求
+    //[req setCachePolicy:ASIOnlyLoadIfNotCachedCachePolicy];//缓存策略是仅使用缓存的数据, 不再向服务器发请求
     [req startAsynchronous];
     
     //[uri release];

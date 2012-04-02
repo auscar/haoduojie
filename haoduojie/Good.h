@@ -10,13 +10,13 @@
 
 @interface Good : NSObject
 
-@property int goodId;
-@property int ownerId;
-@property int streetId;
-@property int streetFriendsNum;
-@property int likeNum;
-@property float price;
-@property BOOL isUserLike;
+@property (assign) int goodId;
+@property (assign) int ownerId;
+@property (assign) int streetId;
+@property (assign) int streetFriendsNum;
+@property (assign) int likeNum;
+@property (assign) float price;
+@property (assign) BOOL isUserLike;
 
 @property (nonatomic, retain) NSString* priceType;
 @property (nonatomic, retain) NSString* goodName;
