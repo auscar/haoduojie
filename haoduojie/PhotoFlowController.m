@@ -73,7 +73,22 @@
 
 #pragma mark - View lifecycle
 - (void)viewWillAppear:(BOOL)animated{
-    self.tabBarController.navigationController.navigationBarHidden = YES;
+    self.tabBarController.navigationController.navigationBarHidden = NO;
+    /*
+    [UIView beginAnimations: @"anim" context: nil];
+    [self.navigationController.navigationBar setAlpha:0];
+    [UIView setAnimationBeginsFromCurrentState: YES];
+    [UIView setAnimationDuration:.5f];
+     */
+    
+    //progressBar.hidden = YES;
+    //[UIView commitAnimations];
+    
+    UIBarButtonItem *rf = [[UIBarButtonItem alloc] initWithTitle:@"我街" style:UIBarButtonItemStyleBordered target:self action:@selector(ownBtnTapped:)];
+    self.tabBarController.navigationItem.rightBarButtonItem = rf;
+    
+    UIBarButtonItem *lf = [[UIBarButtonItem alloc] initWithTitle:@"关注" style:UIBarButtonItemStyleBordered target:self action:@selector(favBtnTapped:)];
+    self.tabBarController.navigationItem.leftBarButtonItem = lf;
     
     [super viewWillAppear:animated];
 }

@@ -37,6 +37,22 @@
     
     [scrollView setContentSize:(CGSizeMake(scrollView.frame.size.width, scrollViewHeight))];
 }
++(void)scrollView:(UIScrollView *)scrollView contentSizeVerticalFitWithDerta:(int)derta{
+    CGFloat scrollViewHeight = 0.0f;
+    for (UIView* view in scrollView.subviews)
+    {
+        if (!view.hidden)
+        {
+            CGFloat y = view.frame.origin.y;
+            CGFloat h = view.frame.size.height;
+            if (y + h > scrollViewHeight)
+            {
+                scrollViewHeight = h + y;
+            }
+        }
+    }
+    [scrollView setContentSize:(CGSizeMake(scrollView.frame.size.width, scrollViewHeight+derta))];
+}
 
 +(void)scrollViewContentSizeHorizontalFit:(UIScrollView *)scrollView{
     CGFloat scrollViewWidth = 0.0f;
@@ -82,6 +98,16 @@
     
     return textSize.height;
 }
++(UIView*)getViewFromXib:(NSString*)xibName{
+    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CommentCell" owner:nil options:nil];
+    UIView* view = nil;
+    if([nib count] > 0){
+        NSLog(@"加载到xib");
+        view = [nib lastObject];
+    }
+    return view;
+}
+
 @end
 
 
