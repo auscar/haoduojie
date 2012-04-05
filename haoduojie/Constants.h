@@ -9,6 +9,7 @@
 #ifndef haoduojie_Constants_h
 #define haoduojie_Constants_h
 
-#define apiUri @"http://api.haoduojie.com"
+//#define apiUri @"http://api.haoduojie.com"
+#define apiUri @"http://192.168.0.101:9999"
 
 #endif

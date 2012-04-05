@@ -9,7 +9,7 @@
 #import "haoduojieAppDelegate.h"
 
 #import "PublishController.h"
-
+#import "GoodPublishController.h"
 
 @implementation haoduojieAppDelegate
 
@@ -31,7 +31,20 @@
     return YES;
 }
 
-
+/*
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    //self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    // Override point for customization after application launch.
+    //self.rootController = [[HaoduojieTabController alloc] initWithNibName:@"HaoduojieTabController" bundle:nil]; 
+    //self.window.rootViewController = self.rootController;
+    
+    self.rootController = [[GoodPublishController alloc] init];
+    [self.window addSubview:rootController.view];
+    [self.window makeKeyAndVisible];
+    return YES;
+}
+*/
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     /*
