@@ -5,18 +5,22 @@
 //  Created by  on 12-4-4.
 //  Copyright 2012年 __MyCompanyName__. All rights reserved.
 //
+#import <QuartzCore/QuartzCore.h>
 #import "ASIFormDataRequest.h"
 #import "GoodPublishController.h"
 #import "Tools.h"
 #import "Constants.h"
 #import "InfoEditTextFieldCell.h"
 #import "SwitchFieldTableViewCell.h"
+#import "InfoScrollView.h"
+#import "PhotoHelper.h"
 
 
 @implementation GoodPublishController
 @synthesize infoTable;
-@synthesize photoScrollView;
+//@synthesize photoScrollView;
 @synthesize good;
+@synthesize uploadScrollView;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -88,8 +92,20 @@
     [req addPostValue:to.text forKey:@"to"];
     [req addPostValue:(weibo.on?@"1":@"") forKey:@"weibo"];
     
+    //如果有图片则在请求中添加图片
+    NSArray* keys = [photosTaken allKeys];
+    NSData *imageData;
+    for (UIButton* btn in keys) {
+        NSLog(@"往请求中添加一张照片");
+        imageData = UIImageJPEGRepresentation([photosTaken objectForKey:btn], 90);
+        [req addData:imageData withFileName:@"head.jpg" andContentType:@"image/jpeg" forKey:@"head"];
+    }
+    
+    
     [_customStatusBar showWithStatusMessage:@"正在提交"];
     [req setCompletionBlock:^(void) {
+
+        NSLog(@"服务器返回是=======>>>>>>>>>  %@",[req responseString]);
         if ([req responseStatusCode] == 200) {//成功
             [_customStatusBar showWithStatusMessage:@"提交成功!"];
             [NSTimer scheduledTimerWithTimeInterval: 0.3
@@ -110,29 +126,41 @@
     [req setDelegate:self];
     [req startAsynchronous];
     [url release];
-    
 }
-
+-(void)takePicture:(id)sender{
+    buttonTapForTakingPhoto = (UIButton*)sender;
+    [PhotoHelper getMediaFromSource:UIImagePickerControllerSourceTypeCamera withDelegate:self];
+}
 
 
 
 #pragma mark - InfoScrollViewDelegate
 -(int)countOfItems{
-    //return [detailArray count];
-    return 0;
+    return 6;
 }
  
 -(int)widthOfEachItem{
-    return 308;
+    return 96;
 }
 -(int)heightOfEachItem{
-    return 308;
+    return 96;
 }
 -(int)paddingOfEachItem{
-    return 6;
+    return 8;
 }
 -(UIView*)viewForIndex:(int)index ofScrollView:(InfoScrollView *)scrollView{
-    return nil;
+    UIButton* photoBtn = [[UIButton alloc] init];
+    UIImage* img = [UIImage imageNamed:@"168-upload-photo-2.png"];
+    [photoBtn setImage:img forState:UIControlStateNormal];
+    [photoBtn setContentMode:UIViewContentModeCenter];
+    photoBtn.backgroundColor = [UIColor colorWithRed:100 green:100 blue:100 alpha:0.5];
+    photoBtn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    photoBtn.layer.borderWidth = 1.0f;
+
+    [photoBtn addTarget:self action:@selector(takePicture:) forControlEvents:UIControlEventTouchUpInside];
+    [img release];   
+    photoBtn.tag = index;
+    return photoBtn;
 }
 
 #pragma mark - View UITableViewDelegate, UITableViewDataSource
@@ -248,6 +276,35 @@
     tap = nil;
     [infoTable removeGestureRecognizer:tap];
 }
+#pragma mark - ImagePickerDelegate
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    UIImage *img = [info objectForKey:UIImagePickerControllerEditedImage];
+    
+    // 保存原图到相册中   
+    UIImageWriteToSavedPhotosAlbum( img, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    
+    //预览
+    if (buttonTapForTakingPhoto) {
+        [buttonTapForTakingPhoto setImage:img forState:UIControlStateNormal];
+        [photosTaken setObject:img forKey:[NSNumber numberWithInt:buttonTapForTakingPhoto.tag]];
+    }
+
+    //保存头像, 需要发送请求到服务器
+    
+    [picker dismissModalViewControllerAnimated:YES];
+}
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
+    [picker dismissModalViewControllerAnimated:YES];
+}
+-(void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)context{
+    /*
+     if(error != nil){//出错了
+     [Dialog alert:titleSomethingWrong :@"抱歉，照片存储出错，请重试":@"哦" withDelegate:self];
+     return;
+     }
+     */
+}
+
 #pragma mark - View lifecycle
 - (void)viewDidLoad
 {
@@ -257,12 +314,14 @@
     infoArray = [[NSArray alloc] initWithObjects:@"标题",@"描述",@"价格",@"发布到",@"发布到微博", nil];
     infoFieldName = [[NSArray alloc] initWithObjects:@"title",@"desc",@"price",@"to",@"weibo", nil];
     infoFieldValue = [[NSMutableDictionary alloc] init];
+    photosTaken = [[NSMutableDictionary alloc] init];
     
     _customStatusBar = [[CustomStatusBar alloc] initWithFrame:CGRectZero];
     
     [self reset:nil];
     //[infoFieldValue setObject:[NSNumber numberWithBool:YES] forKey:[NSNumber numberWithInt:4]];
     
+    [uploadScrollView loadData];//这样InfoScrollView才会渲染
     
     [infoTable reloadData];
 }
@@ -271,13 +330,13 @@
 {
     [self setInfoTable:nil];
     infoArray = nil;
-    [self setPhotoScrollView:nil];
     infoTable = nil;
     infoArray = nil;
     infoFieldName = nil;
     infoFieldValue = nil;
     photoScrollView = nil;
     tap = nil;
+    [self setUploadScrollView:nil];
     [super viewDidUnload];
     
     
@@ -301,6 +360,7 @@
     UIBarButtonItem *lf = [[UIBarButtonItem alloc] initWithTitle:@"重置" style:UIBarButtonItemStyleBordered target:self action:@selector(reset:)];
     self.tabBarController.navigationItem.leftBarButtonItem = lf;
     
+    [lf release];
     [rf release];
     
     //self.tabBarController.navigationItem.leftBarButtonItem = nil;
@@ -313,6 +373,7 @@
     [infoFieldName release];
     [infoFieldValue release];
     [photoScrollView release];
+    [uploadScrollView release];
     [super dealloc];
 }
 @end

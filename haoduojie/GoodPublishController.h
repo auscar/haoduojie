@@ -10,8 +10,9 @@
 #import "InfoScrollViewDelegate.h"
 #import "Good.h"
 #import "CustomStatusBar.h"
-@interface GoodPublishController : UIViewController<InfoScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate> {
+@interface GoodPublishController : UIViewController<InfoScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIImagePickerControllerDelegate> {
     Good* good;
+    InfoScrollView *uploadScrollView;
     UITableView *infoTable;
     InfoScrollView *photoScrollView;
     UIControl* controlEditing;
@@ -30,11 +31,15 @@
     UITextField* to;
     UISwitch* weibo;
     
+    UIButton* buttonTapForTakingPhoto;
+    NSMutableDictionary* photosTaken;
+    
 }
 
 
 @property (retain, nonatomic) IBOutlet UITableView *infoTable;
-@property (retain, nonatomic) IBOutlet InfoScrollView *photoScrollView;
+//@property (retain, nonatomic) IBOutlet InfoScrollView *photoScrollView;
 @property (retain, nonatomic) IBOutlet Good* good;
+@property (retain, nonatomic) IBOutlet InfoScrollView *uploadScrollView;
 
 @end

@@ -14,6 +14,8 @@
     
     NSMutableDictionary* itemResueMap;
     UIPageControl *pageControl;
+    
+    NSMutableArray* views;
 }
 @property (nonatomic, retain) IBOutlet id infoScrollViewDelegate;
 

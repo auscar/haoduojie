@@ -17,6 +17,8 @@
     if (self) {
         // Initialization code here.
         itemResueMap = [[NSMutableDictionary alloc] init];
+        
+        
         self.pagingEnabled = YES;
         // 手势检测左右划动
         UISwipeGestureRecognizer *left = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeHandle:)];
@@ -26,6 +28,8 @@
         UISwipeGestureRecognizer *right = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeHandle:)];
         [right setDirection:(UISwipeGestureRecognizerDirectionRight)];
         [self addGestureRecognizer:right];
+        
+        NSLog(@"InfoScrollView init!!!!!!!!!!!!!!!!");
     }
     
     return self;

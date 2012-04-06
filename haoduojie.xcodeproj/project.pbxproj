@@ -72,6 +72,7 @@
 		E9A9BA091505BB0600B1B55C /* MyStreetsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A9BA081505BB0600B1B55C /* MyStreetsViewController.m */; };
 		E9AB42B5152DEBE900221F8E /* SwitchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9AB42B4152DEBE900221F8E /* SwitchTableViewCell.xib */; };
 		E9AB42B9152DECB000221F8E /* SwitchFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E9AB42B8152DECB000221F8E /* SwitchFieldTableViewCell.m */; };
+		E9AB42C4152F51F200221F8E /* PhotoHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = E9AB42C3152F51F200221F8E /* PhotoHelper.m */; };
 		E9BF8D471518360800B7FBEF /* ImageFlow.m in Sources */ = {isa = PBXBuildFile; fileRef = E9BF8D441518360800B7FBEF /* ImageFlow.m */; };
 		E9BF8D481518360800B7FBEF /* ImageFlower.m in Sources */ = {isa = PBXBuildFile; fileRef = E9BF8D461518360800B7FBEF /* ImageFlower.m */; };
 		E9BF8D69151836C700B7FBEF /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = E9BF8D51151836C700B7FBEF /* NSObject+SBJson.m */; };
@@ -235,6 +236,8 @@
 		E9AB42B4152DEBE900221F8E /* SwitchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SwitchTableViewCell.xib; sourceTree = "<group>"; };
 		E9AB42B7152DECB000221F8E /* SwitchFieldTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchFieldTableViewCell.h; sourceTree = "<group>"; };
 		E9AB42B8152DECB000221F8E /* SwitchFieldTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchFieldTableViewCell.m; sourceTree = "<group>"; };
+		E9AB42C2152F51F200221F8E /* PhotoHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoHelper.h; sourceTree = "<group>"; };
+		E9AB42C3152F51F200221F8E /* PhotoHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoHelper.m; sourceTree = "<group>"; };
 		E9BF8D431518360800B7FBEF /* ImageFlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageFlow.h; sourceTree = "<group>"; };
 		E9BF8D441518360800B7FBEF /* ImageFlow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageFlow.m; sourceTree = "<group>"; };
 		E9BF8D451518360800B7FBEF /* ImageFlower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageFlower.h; sourceTree = "<group>"; };
@@ -526,6 +529,8 @@
 		E9B205C71526FAC500FC4891 /* tool */ = {
 			isa = PBXGroup;
 			children = (
+				E9AB42C2152F51F200221F8E /* PhotoHelper.h */,
+				E9AB42C3152F51F200221F8E /* PhotoHelper.m */,
 				E90CB1D61526FF2600BECD00 /* Tools.h */,
 				E90CB1D71526FF2600BECD00 /* Tools.m */,
 			);
@@ -879,6 +884,7 @@
 				E9CE6DB0152C10BF0018362E /* GoodPublishController.m in Sources */,
 				E9CE6DBD152D94FC0018362E /* InfoEditTextFieldCell.m in Sources */,
 				E9AB42B9152DECB000221F8E /* SwitchFieldTableViewCell.m in Sources */,
+				E9AB42C4152F51F200221F8E /* PhotoHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
