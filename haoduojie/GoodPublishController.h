@@ -9,17 +9,26 @@
 #import <UIKit/UIKit.h>
 #import "InfoScrollViewDelegate.h"
 #import "Good.h"
+#import "CustomStatusBar.h"
 @interface GoodPublishController : UIViewController<InfoScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate> {
     Good* good;
     UITableView *infoTable;
     InfoScrollView *photoScrollView;
     UIControl* controlEditing;
     UITapGestureRecognizer* tap;
+    CustomStatusBar* _customStatusBar;
     
     NSArray* infoArray;
     NSArray* infoFieldName;
     NSMutableArray* photoArray;
     NSMutableDictionary* infoFieldValue;
+    
+    //fields
+    UITextField* title;
+    UITextField* desc;
+    UITextField* price;
+    UITextField* to;
+    UISwitch* weibo;
     
 }
 

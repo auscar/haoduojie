@@ -5,9 +5,10 @@
 //  Created by  on 12-4-4.
 //  Copyright 2012年 __MyCompanyName__. All rights reserved.
 //
-
+#import "ASIFormDataRequest.h"
 #import "GoodPublishController.h"
 #import "Tools.h"
+#import "Constants.h"
 #import "InfoEditTextFieldCell.h"
 #import "SwitchFieldTableViewCell.h"
 
@@ -38,31 +39,80 @@
 
 
 #pragma mark - actions
--(void)publish:(id)sender{
-    NSLog(@"publish~");
-}
 -(void)reset:(id)sender{
     NSLog(@"reset~");
-    UITableViewCell* cell;
-    UITextField* tf;
-    UISwitch* sw;
     
-    NSArray* keys = [infoFieldValue allKeys];
-
-    NSIndexPath* indexPath;
-    for (NSNumber* num in keys) {
-        indexPath = [NSIndexPath indexPathWithIndex:[num intValue]];
-        cell = [infoTable cellForRowAtIndexPath:indexPath];
-        if ([num intValue]<4) {
-            sw = (UISwitch*)[cell viewWithTag:2];
-            sw.on = YES;
+    //NSArray* keys = [infoFieldValue allKeys];
+    
+    NSArray* cells = [infoTable visibleCells];
+    
+    for (UITableViewCell* cell in cells) {
+        NSLog(@"cell type: %@", [[cell class] description]);
+        if ([cell isKindOfClass:[InfoEditTextFieldCell class]]) {
+            ((InfoEditTextFieldCell*)cell).input.text = nil;
         }else{
-            tf  = (UITextField*)[cell viewWithTag:2];
-            tf.text = nil;
+            ((SwitchFieldTableViewCell*)cell).switchBtn.on = YES;
         }
-        [indexPath release];
     }
+    
+    //发布到微博默认为打开状态
+    [infoFieldValue setObject:[NSNumber numberWithBool:YES] forKey:[NSNumber numberWithInt:4]];
 }
+
+-(void)onPostEnd{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    [_customStatusBar hide];
+}
+-(void)onPostSus{
+    [self reset:nil];
+    [self onPostEnd];
+}
+-(void)onPostFail{
+    [self onPostEnd];
+}
+-(void)publish:(id)sender{
+    NSLog(@"publish~");
+    
+    
+    NSURL *url = [[NSURL alloc] initWithString:[[NSString alloc] initWithFormat:@"%@/good/publish", apiUri]];
+    ASIFormDataRequest *req = [ASIFormDataRequest requestWithURL:url];
+    
+    
+    //NSLog(@"the data sent are %@ %@ %@",email.text, nick.text, pwd.text);
+    //NSData *imageData = UIImageJPEGRepresentation(self.head, 90);
+    
+    //[req addData:imageData withFileName:@"head.jpg" andContentType:@"image/jpeg" forKey:@"head"];
+    [req addPostValue:title.text forKey:@"title"];
+    [req addPostValue:desc.text forKey:@"desc"];
+    [req addPostValue:price.text forKey:@"price"];
+    [req addPostValue:to.text forKey:@"to"];
+    [req addPostValue:(weibo.on?@"1":@"") forKey:@"weibo"];
+    
+    [_customStatusBar showWithStatusMessage:@"正在提交"];
+    [req setCompletionBlock:^(void) {
+        if ([req responseStatusCode] == 200) {//成功
+            [_customStatusBar showWithStatusMessage:@"提交成功!"];
+            [NSTimer scheduledTimerWithTimeInterval: 0.3
+                                             target: self
+                                           selector: @selector(onPostSus)
+                                           userInfo: nil
+                                            repeats: NO];            
+        }else{//失败
+            [_customStatusBar showWithStatusMessage:@"提交失败!"];
+            [NSTimer scheduledTimerWithTimeInterval: 0.3
+                                             target: self
+                                           selector: @selector(onPostFail)
+                                           userInfo: nil
+                                            repeats: NO];
+        }
+    }];
+    
+    [req setDelegate:self];
+    [req startAsynchronous];
+    [url release];
+    
+}
+
 
 
 
@@ -136,6 +186,29 @@
             icell.input.delegate = self;
             icell.input.tag = row;
         }
+        
+        //获取他们的引用, 在提交的时候取他们的值来post到服务器
+        switch (row) {
+            case 0:
+                title = icell.input;
+                break;
+            case 1:
+                desc = icell.input;
+                break;
+            case 2:
+                price = icell.input;
+                break;
+            case 3:
+                to = icell.input;
+                break;
+            case 4:
+                weibo = scell.switchBtn;
+                break;
+            default:
+                break;
+        }
+        
+        
 	}
     NSNumber* numb = [NSNumber numberWithInt:row];
     if ([infoFieldValue objectForKey:numb]) {
@@ -145,6 +218,8 @@
             icell.input.text = [infoFieldValue objectForKey:numb];
         }
     }
+    
+    
     
     return cell;
 }
@@ -162,6 +237,7 @@
     [infoFieldValue setObject:textField.text forKey:[NSNumber numberWithInt:textField.tag]];
 }
 -(void)switchValueChanged:(id)sender{
+    NSLog(@"value changed");
     UISwitch* switchBtn = (UISwitch*)sender;
     [infoFieldValue setObject:[NSNumber numberWithBool:switchBtn.on] forKey:[NSNumber numberWithInt:switchBtn.tag]];
     
@@ -181,6 +257,11 @@
     infoArray = [[NSArray alloc] initWithObjects:@"标题",@"描述",@"价格",@"发布到",@"发布到微博", nil];
     infoFieldName = [[NSArray alloc] initWithObjects:@"title",@"desc",@"price",@"to",@"weibo", nil];
     infoFieldValue = [[NSMutableDictionary alloc] init];
+    
+    _customStatusBar = [[CustomStatusBar alloc] initWithFrame:CGRectZero];
+    
+    [self reset:nil];
+    //[infoFieldValue setObject:[NSNumber numberWithBool:YES] forKey:[NSNumber numberWithInt:4]];
     
     
     [infoTable reloadData];
