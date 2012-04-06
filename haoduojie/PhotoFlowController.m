@@ -90,6 +90,9 @@
     UIBarButtonItem *lf = [[UIBarButtonItem alloc] initWithTitle:@"关注" style:UIBarButtonItemStyleBordered target:self action:@selector(favBtnTapped:)];
     self.tabBarController.navigationItem.leftBarButtonItem = lf;
     
+    [rf release];
+    [lf release];
+    
     [super viewWillAppear:animated];
 }
 - (void)viewDidLoad

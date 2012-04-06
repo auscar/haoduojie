@@ -37,7 +37,35 @@
 
 
 
- 
+#pragma mark - actions
+-(void)publish:(id)sender{
+    NSLog(@"publish~");
+}
+-(void)reset:(id)sender{
+    NSLog(@"reset~");
+    UITableViewCell* cell;
+    UITextField* tf;
+    UISwitch* sw;
+    
+    NSArray* keys = [infoFieldValue allKeys];
+
+    NSIndexPath* indexPath;
+    for (NSNumber* num in keys) {
+        indexPath = [NSIndexPath indexPathWithIndex:[num intValue]];
+        cell = [infoTable cellForRowAtIndexPath:indexPath];
+        if ([num intValue]<4) {
+            sw = (UISwitch*)[cell viewWithTag:2];
+            sw.on = YES;
+        }else{
+            tf  = (UITextField*)[cell viewWithTag:2];
+            tf.text = nil;
+        }
+        [indexPath release];
+    }
+}
+
+
+
 #pragma mark - InfoScrollViewDelegate
 -(int)countOfItems{
     //return [detailArray count];
@@ -182,7 +210,22 @@
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
-
+-(void)viewWillAppear:(BOOL)animated{
+    
+    self.tabBarController.title = @"发布好东西";
+    
+    UIBarButtonItem *rf = [[UIBarButtonItem alloc] initWithTitle:@"发布" style:UIBarButtonItemStyleBordered target:self action:@selector(publish:)];
+    self.tabBarController.navigationItem.rightBarButtonItem = rf;
+    
+    UIBarButtonItem *lf = [[UIBarButtonItem alloc] initWithTitle:@"重置" style:UIBarButtonItemStyleBordered target:self action:@selector(reset:)];
+    self.tabBarController.navigationItem.leftBarButtonItem = lf;
+    
+    [rf release];
+    
+    //self.tabBarController.navigationItem.leftBarButtonItem = nil;
+     
+    [super viewWillAppear:animated];
+}
 - (void)dealloc {
     [infoTable release];
     [infoArray release];

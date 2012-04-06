@@ -55,6 +55,9 @@
 }
 -(void) viewWillAppear:(BOOL)animated{
     self.tabBarController.title = @"发现";
+    self.tabBarController.navigationItem.leftBarButtonItem = nil;
+    self.tabBarController.navigationItem.rightBarButtonItem = nil;
+    
     [super viewWillAppear:animated];
 }
 - (void)viewDidUnload
