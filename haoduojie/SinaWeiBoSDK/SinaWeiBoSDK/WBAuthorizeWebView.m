@@ -38,36 +38,41 @@
 @implementation WBAuthorizeWebView
 
 @synthesize delegate;
+@synthesize showInWindow;
 
 #pragma mark - WBAuthorizeWebView Life Circle
 
 - (id)init
 {
-    if (self = [super initWithFrame:CGRectMake(0, 0, 320, 480)])
+    if (self = [super initWithFrame:CGRectMake(0, 0, 320, 180)])
     {
         // background settings
         [self setBackgroundColor:[UIColor clearColor]];
         [self setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
         
         // add the panel view
-        panelView = [[UIView alloc] initWithFrame:CGRectMake(10, 30, 300, 440)];
+        /*
+        panelView = [[UIView alloc] initWithFrame:CGRectMake(10, 0, 300, 440)];
         [panelView setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.55]];
         [[panelView layer] setMasksToBounds:NO]; // very important
         [[panelView layer] setCornerRadius:10.0];
         [self addSubview:panelView];
+         */
         
         // add the conainer view
+        /*
         containerView = [[UIView alloc] initWithFrame:CGRectMake(10, 10, 280, 420)];
         [[containerView layer] setBorderColor:[UIColor colorWithRed:0. green:0. blue:0. alpha:0.7].CGColor];
         [[containerView layer] setBorderWidth:1.0];
-        
+        */
         
         // add the web view
-        webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 280, 390)];
+        webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 320, 420)];
 		[webView setDelegate:self];
-		[containerView addSubview:webView];
+        [self addSubview:webView];
+		//[containerView addSubview:webView];
         
-        [panelView addSubview:containerView];
+        //[panelView addSubview:containerView];
         
         indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         [indicatorView setCenter:CGPointMake(160, 240)];
@@ -82,6 +87,7 @@
     [containerView release], containerView = nil;
     [webView release], webView = nil;
     [indicatorView release], indicatorView = nil;
+    //[showInWindow release], showInWindow = nil;
     
     [super dealloc];
 }
@@ -107,7 +113,7 @@
     if (UIInterfaceOrientationIsLandscape(orientation))
     {
         [self setFrame:CGRectMake(0, 0, 480, 320)];
-        [panelView setFrame:CGRectMake(10, 30, 460, 280)];
+        [panelView setFrame:CGRectMake(10, 10, 460, 280)];
         [containerView setFrame:CGRectMake(10, 10, 440, 260)];
         [webView setFrame:CGRectMake(0, 0, 440, 260)];
         [indicatorView setCenter:CGPointMake(240, 160)];
@@ -115,11 +121,12 @@
     else
     {
         [self setFrame:CGRectMake(0, 0, 320, 480)];
-        [panelView setFrame:CGRectMake(10, 30, 300, 440)];
-        [containerView setFrame:CGRectMake(10, 10, 280, 420)];
-        [webView setFrame:CGRectMake(0, 0, 280, 420)];
+        [panelView setFrame:CGRectMake(10, 10, 300, 380)];
+        [containerView setFrame:CGRectMake(10, 0, 280, 420)];
+        [webView setFrame:CGRectMake(0, 0, 320, 480)];
         [indicatorView setCenter:CGPointMake(160, 240)];
     }
+    
     
     [self setCenter:CGPointMake(160, 240)];
     
@@ -236,30 +243,35 @@
 {
     [self sizeToFitOrientation:[self currentOrientation]];
     
+    /*
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
 	if (!window)
     {
 		window = [[UIApplication sharedApplication].windows objectAtIndex:0];
 	}
   	[window addSubview:self];
-    
+     */
+    //window.frame = CGRectMake(0, 200, 200, 200);
+    [showInWindow addSubview:self];
+    /*
     if (animated)
     {
-        [panelView setAlpha:0];
+        [webView setAlpha:0];
         CGAffineTransform transform = CGAffineTransformIdentity;
-        [panelView setTransform:CGAffineTransformScale(transform, 0.3, 0.3)];
+        [webView setTransform:CGAffineTransformScale(transform, 0.3, 0.3)];
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationDuration:0.2];
         [UIView setAnimationDelegate:self];
         [UIView setAnimationDidStopSelector:@selector(bounceOutAnimationStopped)];
-        [panelView setAlpha:0.5];
-        [panelView setTransform:CGAffineTransformScale(transform, 1.1, 1.1)];
+        [webView setAlpha:0.5];
+        [webView setTransform:CGAffineTransformScale(transform, 1.1, 1.1)];
         [UIView commitAnimations];
     }
     else
     {
         [self allAnimationsStopped];
     }
+     */
     
     [self addObservers];
 }

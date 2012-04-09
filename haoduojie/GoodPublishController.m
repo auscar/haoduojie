@@ -18,7 +18,9 @@
 #import "PhotoHelper.h"
 #import "Dialog.h"
 #import "StreetSelectingController.h"
-#import "WBEngine.h"
+#import "ButtonHelper.h"
+
+
 
 
 
@@ -38,6 +40,7 @@
     [uploadScrollView release];
     [alert release];
     [toStreets release];
+    [WeiboEngine release];
     [super dealloc];
 }
 - (void)viewDidUnload
@@ -53,6 +56,7 @@
     tap = nil;
     [self setUploadScrollView:nil];
     alert = nil;
+    WeiboEngine = nil;
     [super viewDidUnload];
 }
 
@@ -81,8 +85,8 @@
     
     //NSArray* keys = [infoFieldValue allKeys];
     
-    NSArray* cells = [infoTable visibleCells];
-    
+    //NSArray* cells = [infoTable visibleCells];
+    /*
     for (UITableViewCell* cell in cells) {
         NSLog(@"cell type: %@", [[cell class] description]);
         if ([cell isKindOfClass:[InfoEditTextFieldCell class]]) {
@@ -95,11 +99,36 @@
             ((SwitchFieldTableViewCell*)cell).switchBtn.on = YES;
         }
     }
-    
+     */
+    title.text = nil;
+    desc.text = nil;
+    price.text = nil;
+    to.text = nil;
+    priceSwitch.on = YES;
+    weibo.on = YES;
     //发布到微博默认为打开状态
     [infoFieldValue setObject:[NSNumber numberWithBool:YES] forKey:[NSNumber numberWithInt:4]];
+    
+    NSArray* btns = [photosTaken allKeys];
+    for (UIButton* btn in btns) {
+        [btn setImage:nil forState:UIControlStateNormal];
+    }
+    [photosTaken release];
+    photosTaken = nil;
+    photosTaken = [[NSMutableDictionary alloc] init];
+    
 }
-
+-(void)bindWeiboAction:(id)sender{
+    NSLog(@"弹出weibo窗口");
+    
+    WeiboLoginController* weiboLoginController = [[WeiboLoginController alloc] init];
+    weiboLoginController.view.backgroundColor = [UIColor darkGrayColor];
+    WeiboEngine.rootViewController = weiboLoginController;
+    [self.navigationController pushViewController:weiboLoginController animated:YES];
+    
+    [WeiboEngine logIn];
+    [weiboLoginController release];
+}
 -(void)onPostEnd{
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [_customStatusBar hide];
@@ -144,16 +173,17 @@
         alert = nil;
     }
     //校验一下空提交
-    if ([title.text isEqualToString:@""]) {
+    if ([title.text isEqualToString:@""]||!title.text) {
         alert = [Dialog alertWithTitle:ALERT_TITLE withMessage:ALERT_TIP_EMPTY_TITLE withConfirmText:ALERT_CONFIRM withDelegate:self];
         return;
-    }else if([desc.text isEqualToString:@""]){
+    }else if([desc.text isEqualToString:@""]||!desc.text){
         alert = [Dialog alertWithTitle:ALERT_TITLE withMessage:ALERT_TIP_EMPTY_DESC withConfirmText:ALERT_CONFIRM withDelegate:self];
         return;
-    }else if([price.text isEqualToString:@""]&&priceSwitch.on){
+    }else if(([price.text isEqualToString:@""]||!price.text)&&priceSwitch.on){
         alert = [Dialog alertWithTitle:ALERT_TITLE withMessage:ALERT_TIP_EMPTY_PRICE withConfirmText:ALERT_CONFIRM withDelegate:self];
         return;
-    }else if([to.text isEqualToString:@""]){
+    }
+    else if([to.text isEqualToString:@""]||!to.text){
         alert = [Dialog alertWithTitle:ALERT_TITLE withMessage:ALERT_TIP_EMPTY_TO withConfirmText:ALERT_CONFIRM withDelegate:self];
         return;
     }
@@ -178,6 +208,20 @@
         imageData = UIImageJPEGRepresentation([photosTaken objectForKey:btn], 90);
         [req addData:imageData withFileName:@"head.jpg" andContentType:@"image/jpeg" forKey:@"head"];
     }
+    
+    
+    //绑定了微博并且需要同步到微博
+    if ([WeiboEngine isLoggedIn] && ![WeiboEngine isAuthorizeExpired]&&weibo.on){
+        NSLog(@"准备发微博...");
+        UIImage* image;
+        if ([keys count]) {
+            image = [photosTaken objectForKey:[keys objectAtIndex:0]];
+        }else{
+            image = nil;
+        }
+        [WeiboEngine sendWeiBoWithText:[NSString stringWithFormat:@"出售“%@”，价格%@，详情见...",title.text,price.text] image:image];
+    }
+
     
     
     [_customStatusBar showWithStatusMessage:@"正在提交"];
@@ -271,6 +315,9 @@
 
 #pragma mark - UITableViewDelegate, UITableViewDataSource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    if (![infoArray count]) {
+        return 0;
+    }
     return 1;
 }
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -329,13 +376,32 @@
         }
         
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-        
+        //微博
         if (row == 4) {//boolean
             scell = (SwitchFieldTableViewCell*)cell;
             scell.label.text = [infoArray objectAtIndex:row];
             scell.switchBtn.on = YES;
             [scell.switchBtn addTarget:self action:@selector(switchValueChanged:) forControlEvents:UIControlEventValueChanged];
             scell.switchBtn.tag = row;
+            
+            if (bindWeibo) {
+                [bindWeibo release];
+                bindWeibo = nil;
+            }
+            
+            if (WeiboEngine) {
+                if ([WeiboEngine isLoggedIn] && ![WeiboEngine isAuthorizeExpired]){
+                    //NSLog(@"微博登录了!!!!!!");
+                }else{
+                    //NSLog(@"微博没有登录");
+                    bindWeibo = [ButtonHelper makeSigmentButtonWithTitle:@"先绑定微博吧~"];
+                    bindWeibo.frame = CGRectMake(95, 8, 150, 28);
+                    [bindWeibo addTarget:self action:@selector(bindWeiboAction:) forControlEvents:UIControlEventValueChanged];
+                    [scell.contentView addSubview:bindWeibo];
+                    [bindWeibo release];
+                }
+            }
+            
         }else if(row == 2){
             pcell = (PriceTableViewCell*)cell;
             pcell.label.text = [infoArray objectAtIndex:row];
@@ -393,6 +459,11 @@
     return cell;
 }
 
+
+
+
+#pragma mark - TextFieldDelegate
+
 -(void)textFieldDidBeginEditing:(UITextField *)textField{
     controlEditing = textField;
     if (!tap) {
@@ -402,7 +473,7 @@
     }
     
     //TODO: not work
-    [((UIScrollView*)self.view) scrollRectToVisible:textField.frame animated:YES];
+    //[((UIScrollView*)self.view)];
 }
 -(void)textFieldDidEndEditing:(UITextField *)textField{
     //记录下用户设置的值
@@ -464,6 +535,15 @@
      */
 }
 
+#pragma mark - WBEngineDelegate
+-(void)engineDidLogIn:(WBEngine *)engine{
+    //NSLog(@"engine did login!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    [bindWeibo setHidden:YES];
+}
+-(void)didCancel{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 #pragma mark - View lifecycle
 - (void)viewDidLoad
 {
@@ -473,7 +553,7 @@
     infoArray = [[NSArray alloc] initWithObjects:@"标题",@"描述",@"价格",@"发布到",@"发布到微博", nil];
     infoFieldName = [[NSArray alloc] initWithObjects:@"title",@"desc",@"price",@"to",@"weibo", nil];
     infoFieldValue = [[NSMutableDictionary alloc] init];
-    photosTaken = [[NSMutableDictionary alloc] init];
+    //photosTaken = [[NSMutableDictionary alloc] init];
     toStreets  = [[NSMutableArray alloc] init];
     
     _customStatusBar = [[CustomStatusBar alloc] initWithFrame:CGRectZero];
@@ -481,7 +561,19 @@
     [((UIScrollView*)self.view) setContentSize:CGSizeMake(320, 475)];
     
     [self reset:nil];
-    //[infoFieldValue setObject:[NSNumber numberWithBool:YES] forKey:[NSNumber numberWithInt:4]];
+    
+    //微博Client
+    WBEngine* wbe = [[WBEngine alloc] initWithAppKey:WeiboAppKey appSecret:WeiboAppSecret];
+    [wbe setDelegate:self];
+    [wbe setRedirectURI:@"http://"];
+    [wbe setIsUserExclusive:NO];
+    [wbe setRootViewController:self];
+    WeiboEngine = wbe;
+    //[wbe release];
+    
+    //[WeiboEngine logOut];
+    
+    
     
     [uploadScrollView loadData];//这样InfoScrollView才会渲染
     
@@ -508,8 +600,16 @@
     [lf release];
     [rf release];
     
+    NSLog(@"可能有bug的地方: %@", [self getToStreetsString:YES]);
+    
     //显示用户当前选择发布的街道, 首次进入是没有街道的
     to.text = [self getToStreetsString:YES];
+    
+    if ([WeiboEngine isLoggedIn] && ![WeiboEngine isAuthorizeExpired]){
+        [bindWeibo setHidden:YES];
+    }else{
+        [bindWeibo setHidden:NO];
+    }
     
     
     

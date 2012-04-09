@@ -72,7 +72,8 @@
     req.delegate = self;
     req.didFinishSelector = @selector(didFinishRequest:);
     req.didFailSelector = @selector(didFailRequest:);
-    [req startSynchronous];
+    //[req startSynchronous];
+    [req startAsynchronous];
 }
 -(void)flowCellTapped:(id)sender{
     ImageFlowerButton* btn = (ImageFlowerButton*)sender;

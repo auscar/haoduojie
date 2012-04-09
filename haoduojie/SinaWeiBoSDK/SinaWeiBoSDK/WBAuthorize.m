@@ -131,7 +131,8 @@
     WBAuthorizeWebView *webView = [[WBAuthorizeWebView alloc] init];
     [webView setDelegate:self];
     [webView loadRequestWithURL:[NSURL URLWithString:urlString]];
-    [webView show:YES];
+    webView.showInWindow = self.rootViewController.view;
+    [webView show:NO];
     [webView release];
 }
 
@@ -145,7 +146,9 @@
 - (void)authorizeWebView:(WBAuthorizeWebView *)webView didReceiveAuthorizeCode:(NSString *)code
 {
     [webView hide:YES];
-    
+    if ([delegate respondsToSelector:@selector(didCancel)]) {
+        [delegate didCancel];
+    }
     // if not canceled
     if (![code isEqualToString:@"21330"])
     {

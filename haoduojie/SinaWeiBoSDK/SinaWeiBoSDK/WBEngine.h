@@ -52,6 +52,7 @@
 
 - (void)engine:(WBEngine *)engine requestDidFailWithError:(NSError *)error;
 - (void)engine:(WBEngine *)engine requestDidSucceedWithResult:(id)result;
+-(void)didCancel;
 
 @end
 

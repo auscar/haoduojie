@@ -11,7 +11,9 @@
 #import "Good.h"
 #import "Street.h"
 #import "CustomStatusBar.h"
-@interface GoodPublishController : UIViewController<InfoScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIImagePickerControllerDelegate,UIPickerViewDelegate> {
+#import "WBEngine.h"
+#import "WeiboLoginController.h"
+@interface GoodPublishController : UIViewController<InfoScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIImagePickerControllerDelegate,UIPickerViewDelegate, WBEngineDelegate> {
     Good* good;
     InfoScrollView *uploadScrollView;
     UITableView *infoTable;
@@ -20,6 +22,8 @@
     UITapGestureRecognizer* tap;
     CustomStatusBar* _customStatusBar;
     UIAlertView* alert;
+    UISegmentedControl* bindWeibo;
+    
     
     NSArray* infoArray;
     NSArray* infoFieldName;
@@ -37,6 +41,9 @@
     
     UIButton* buttonTapForTakingPhoto;
     NSMutableDictionary* photosTaken;
+    
+    WBEngine* WeiboEngine;
+   
     
 }
 

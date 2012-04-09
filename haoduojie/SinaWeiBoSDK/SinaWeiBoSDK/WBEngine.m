@@ -317,6 +317,9 @@
         [delegate engine:self didFailToLogInWithError:error];
     }
 }
+-(void)didCancel{
+    [delegate didCancel];
+}
 
 #pragma mark - WBRequestDelegate Methods
 

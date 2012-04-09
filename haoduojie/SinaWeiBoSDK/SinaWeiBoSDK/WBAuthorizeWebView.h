@@ -31,6 +31,7 @@
     UIView *containerView;
     UIActivityIndicatorView *indicatorView;
 	UIWebView *webView;
+    UIView* showInWindow;
     
     UIInterfaceOrientation previousOrientation;
     
@@ -38,6 +39,7 @@
 }
 
 @property (nonatomic, assign) id<WBAuthorizeWebViewDelegate> delegate;
+@property (nonatomic, assign) UIView* showInWindow;
 
 - (void)loadRequestWithURL:(NSURL *)url;
 
