@@ -5,7 +5,7 @@
 //  Created by  on 12-3-20.
 //  Copyright 2012年 __MyCompanyName__. All rights reserved.
 //
-
+#import "Keys.h"
 #ifndef haoduojie_Constants_h
 #define haoduojie_Constants_h
 
