@@ -6,14 +6,21 @@
 //  Copyright 2012年 __MyCompanyName__. All rights reserved.
 //
 #import <QuartzCore/QuartzCore.h>
+#import "SBJson.h"
 #import "ASIFormDataRequest.h"
 #import "GoodPublishController.h"
 #import "Tools.h"
 #import "Constants.h"
 #import "InfoEditTextFieldCell.h"
 #import "SwitchFieldTableViewCell.h"
+#import "PriceTableViewCell.h"
 #import "InfoScrollView.h"
 #import "PhotoHelper.h"
+#import "Dialog.h"
+#import "StreetSelectingController.h"
+#import "WBEngine.h"
+
+
 
 
 @implementation GoodPublishController
@@ -22,6 +29,32 @@
 @synthesize good;
 @synthesize uploadScrollView;
 
+- (void)dealloc {
+    [infoTable release];
+    [infoArray release];
+    [infoFieldName release];
+    [infoFieldValue release];
+    [photoScrollView release];
+    [uploadScrollView release];
+    [alert release];
+    [toStreets release];
+    [super dealloc];
+}
+- (void)viewDidUnload
+{
+    NSLog(@"pubish unload");
+    [self setInfoTable:nil];
+    infoArray = nil;
+    infoTable = nil;
+    infoArray = nil;
+    infoFieldName = nil;
+    infoFieldValue = nil;
+    photoScrollView = nil;
+    tap = nil;
+    [self setUploadScrollView:nil];
+    alert = nil;
+    [super viewDidUnload];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -42,7 +75,7 @@
 
 
 
-#pragma mark - actions
+#pragma mark - actions and helper method
 -(void)reset:(id)sender{
     NSLog(@"reset~");
     
@@ -54,7 +87,11 @@
         NSLog(@"cell type: %@", [[cell class] description]);
         if ([cell isKindOfClass:[InfoEditTextFieldCell class]]) {
             ((InfoEditTextFieldCell*)cell).input.text = nil;
-        }else{
+        }else if([cell isKindOfClass:[PriceTableViewCell class]]){
+            ((PriceTableViewCell*)cell).priceSwitchBtn.on = YES;
+            ((PriceTableViewCell*)cell).price.text = nil;
+        }
+        else{
             ((SwitchFieldTableViewCell*)cell).switchBtn.on = YES;
         }
     }
@@ -74,23 +111,64 @@
 -(void)onPostFail{
     [self onPostEnd];
 }
+-(NSString*)getToStreetsString:(BOOL)isName{
+    if ([toStreets count]) {
+        NSMutableString* str = [[[NSMutableString alloc] init] autorelease];
+        Street* street;
+        for (int i=0; i<[toStreets count]; i++) {
+            street = [toStreets objectAtIndex:i];
+            if (i) {
+                if (isName) {
+                    [str appendFormat:@",%@",street.streetName];
+                }else{
+                    [str appendFormat:@",%d",street.streetId];
+                }
+                
+            }else{
+                if (isName) {
+                    [str appendString:street.streetName];
+                }else{
+                    [str appendFormat:@"%d",street.streetId];
+                }
+            }
+        }
+        return str;
+    }
+    return nil;
+}
 -(void)publish:(id)sender{
     NSLog(@"publish~");
     
+    if (alert) {
+        [alert release];
+        alert = nil;
+    }
+    //校验一下空提交
+    if ([title.text isEqualToString:@""]) {
+        alert = [Dialog alertWithTitle:ALERT_TITLE withMessage:ALERT_TIP_EMPTY_TITLE withConfirmText:ALERT_CONFIRM withDelegate:self];
+        return;
+    }else if([desc.text isEqualToString:@""]){
+        alert = [Dialog alertWithTitle:ALERT_TITLE withMessage:ALERT_TIP_EMPTY_DESC withConfirmText:ALERT_CONFIRM withDelegate:self];
+        return;
+    }else if([price.text isEqualToString:@""]&&priceSwitch.on){
+        alert = [Dialog alertWithTitle:ALERT_TITLE withMessage:ALERT_TIP_EMPTY_PRICE withConfirmText:ALERT_CONFIRM withDelegate:self];
+        return;
+    }else if([to.text isEqualToString:@""]){
+        alert = [Dialog alertWithTitle:ALERT_TITLE withMessage:ALERT_TIP_EMPTY_TO withConfirmText:ALERT_CONFIRM withDelegate:self];
+        return;
+    }
     
     NSURL *url = [[NSURL alloc] initWithString:[[NSString alloc] initWithFormat:@"%@/good/publish", apiUri]];
     ASIFormDataRequest *req = [ASIFormDataRequest requestWithURL:url];
     
     
-    //NSLog(@"the data sent are %@ %@ %@",email.text, nick.text, pwd.text);
-    //NSData *imageData = UIImageJPEGRepresentation(self.head, 90);
-    
     //[req addData:imageData withFileName:@"head.jpg" andContentType:@"image/jpeg" forKey:@"head"];
     [req addPostValue:title.text forKey:@"title"];
     [req addPostValue:desc.text forKey:@"desc"];
-    [req addPostValue:price.text forKey:@"price"];
-    [req addPostValue:to.text forKey:@"to"];
+    [req addPostValue:(priceSwitch.on?price.text:@"0") forKey:@"price"];
     [req addPostValue:(weibo.on?@"1":@"") forKey:@"weibo"];
+    //发布到的街道
+    [req addPostValue:[self getToStreetsString:NO] forKey:@"to"];
     
     //如果有图片则在请求中添加图片
     NSArray* keys = [photosTaken allKeys];
@@ -103,18 +181,45 @@
     
     
     [_customStatusBar showWithStatusMessage:@"正在提交"];
+    
     [req setCompletionBlock:^(void) {
-
+        BOOL sus = YES;
+        NSDictionary* obj;
+        NSString* msg;
+    
+        if ([req responseStatusCode] == 200) {
+            @try {
+                obj = [req.responseString JSONValue];
+                int code = [[obj objectForKey:@"code"] intValue];
+                if (code) {
+                    sus = NO;
+                    msg = [obj objectForKey:@"msg"];
+                }
+            }
+            @catch (NSException *exception) {
+                sus = NO;
+            }
+        }else{
+            sus = NO;
+            msg = COMMIT_FAILD;
+        }
+        
+       
         NSLog(@"服务器返回是=======>>>>>>>>>  %@",[req responseString]);
-        if ([req responseStatusCode] == 200) {//成功
-            [_customStatusBar showWithStatusMessage:@"提交成功!"];
+        if (sus) {//成功
+            [_customStatusBar showWithStatusMessage:COMMIT_SUS];
             [NSTimer scheduledTimerWithTimeInterval: 0.3
                                              target: self
                                            selector: @selector(onPostSus)
                                            userInfo: nil
                                             repeats: NO];            
         }else{//失败
-            [_customStatusBar showWithStatusMessage:@"提交失败!"];
+            [_customStatusBar showWithStatusMessage:COMMIT_FAILD];
+            if (alert) {
+                [alert release];
+                alert = nil;
+            }
+            alert = [Dialog alertWithTitle:ALERT_TITLE withMessage:msg withConfirmText:ALERT_CONFIRM withDelegate:self];
             [NSTimer scheduledTimerWithTimeInterval: 0.3
                                              target: self
                                            selector: @selector(onPostFail)
@@ -131,6 +236,7 @@
     buttonTapForTakingPhoto = (UIButton*)sender;
     [PhotoHelper getMediaFromSource:UIImagePickerControllerSourceTypeCamera withDelegate:self];
 }
+
 
 
 
@@ -163,7 +269,7 @@
     return photoBtn;
 }
 
-#pragma mark - View UITableViewDelegate, UITableViewDataSource
+#pragma mark - UITableViewDelegate, UITableViewDataSource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
@@ -177,19 +283,41 @@
     return 48;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    NSLog(@"did select...");
+    if (tap) {
+        [infoTable removeGestureRecognizer:tap];
+        tap = nil;
+    }
+    if (indexPath.row == 3) {
+        NSLog(@"push view please...");
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];    
+        StreetSelectingController* ss = [StreetSelectingController alloc];
+        ss.toStreets = toStreets;//将用户已经选择的街道传进去, 以便在街道列表中确认那些街道被选择了
+        [ss init];
+        
+        [self.navigationController pushViewController:ss animated:YES];
+    }else{
+        [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    }
+    
 }
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *CellIdentifier = @"InfoEditTextFieldCell";
 	UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     InfoEditTextFieldCell* icell;
     SwitchFieldTableViewCell* scell;
+    PriceTableViewCell* pcell;
+
+    
     int row = [indexPath row];
     if (cell == nil) {
         NSArray *nib;
         if (row == 4) {//boolean
             nib = [[NSBundle mainBundle] loadNibNamed:@"SwitchTableViewCell" owner:self options:nil];
-        }else{
+        }else if(row == 2){
+            nib = [[NSBundle mainBundle] loadNibNamed:@"PriceTableViewCell" owner:self options:nil];
+        }
+        else{
             nib = [[NSBundle mainBundle] loadNibNamed:@"TextFieldTableView" owner:self options:nil];
         }
         
@@ -208,11 +336,27 @@
             scell.switchBtn.on = YES;
             [scell.switchBtn addTarget:self action:@selector(switchValueChanged:) forControlEvents:UIControlEventValueChanged];
             scell.switchBtn.tag = row;
-        }else{
+        }else if(row == 2){
+            pcell = (PriceTableViewCell*)cell;
+            pcell.label.text = [infoArray objectAtIndex:row];
+            pcell.price.delegate = self;
+            pcell.priceSwitchBtn.on = YES;
+            [pcell.priceSwitchBtn addTarget:self action:@selector(switchValueChanged2:) forControlEvents:UIControlEventValueChanged];
+
+        }
+        else{
+            
             icell = (InfoEditTextFieldCell*)cell;
             icell.label.text = [infoArray objectAtIndex:row];
             icell.input.delegate = self;
             icell.input.tag = row;
+            
+            //选择街道
+            if (row == 3) {
+                [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+                [cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
+                icell.input.userInteractionEnabled = NO;
+            }
         }
         
         //获取他们的引用, 在提交的时候取他们的值来post到服务器
@@ -224,7 +368,8 @@
                 desc = icell.input;
                 break;
             case 2:
-                price = icell.input;
+                price = pcell.price;
+                priceSwitch = pcell.priceSwitchBtn;
                 break;
             case 3:
                 to = icell.input;
@@ -235,8 +380,6 @@
             default:
                 break;
         }
-        
-        
 	}
     NSNumber* numb = [NSNumber numberWithInt:row];
     if ([infoFieldValue objectForKey:numb]) {
@@ -246,8 +389,6 @@
             icell.input.text = [infoFieldValue objectForKey:numb];
         }
     }
-    
-    
     
     return cell;
 }
@@ -259,6 +400,9 @@
         [infoTable addGestureRecognizer:tap];
         [tap release];
     }
+    
+    //TODO: not work
+    [((UIScrollView*)self.view) scrollRectToVisible:textField.frame animated:YES];
 }
 -(void)textFieldDidEndEditing:(UITextField *)textField{
     //记录下用户设置的值
@@ -270,11 +414,26 @@
     [infoFieldValue setObject:[NSNumber numberWithBool:switchBtn.on] forKey:[NSNumber numberWithInt:switchBtn.tag]];
     
 }
+-(void)switchValueChanged2:(id)sender{
+    NSLog(@"value changed2");
+    UISwitch* switchBtn = (UISwitch*)sender;
+    
+    if (switchBtn.on) {
+        [price setHidden:NO];
+    }else{
+        [price setHidden:YES];
+    }
+
+    
+}
 -(void)keyBoardMiss{
+    NSLog(@"keyboard miss");
     [controlEditing resignFirstResponder];
     controlEditing = nil;
-    tap = nil;
-    [infoTable removeGestureRecognizer:tap];
+    if (tap) {
+        [infoTable removeGestureRecognizer:tap];
+        tap = nil;
+    }
 }
 #pragma mark - ImagePickerDelegate
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
@@ -315,8 +474,11 @@
     infoFieldName = [[NSArray alloc] initWithObjects:@"title",@"desc",@"price",@"to",@"weibo", nil];
     infoFieldValue = [[NSMutableDictionary alloc] init];
     photosTaken = [[NSMutableDictionary alloc] init];
+    toStreets  = [[NSMutableArray alloc] init];
     
     _customStatusBar = [[CustomStatusBar alloc] initWithFrame:CGRectZero];
+    
+    [((UIScrollView*)self.view) setContentSize:CGSizeMake(320, 475)];
     
     [self reset:nil];
     //[infoFieldValue setObject:[NSNumber numberWithBool:YES] forKey:[NSNumber numberWithInt:4]];
@@ -326,24 +488,7 @@
     [infoTable reloadData];
 }
 
-- (void)viewDidUnload
-{
-    [self setInfoTable:nil];
-    infoArray = nil;
-    infoTable = nil;
-    infoArray = nil;
-    infoFieldName = nil;
-    infoFieldValue = nil;
-    photoScrollView = nil;
-    tap = nil;
-    [self setUploadScrollView:nil];
-    [super viewDidUnload];
-    
-    
-    
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
+
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -363,24 +508,14 @@
     [lf release];
     [rf release];
     
+    //显示用户当前选择发布的街道, 首次进入是没有街道的
+    to.text = [self getToStreetsString:YES];
+    
+    
+    
     //self.tabBarController.navigationItem.leftBarButtonItem = nil;
      
     [super viewWillAppear:animated];
 }
-- (void)dealloc {
-    [infoTable release];
-    [infoArray release];
-    [infoFieldName release];
-    [infoFieldValue release];
-    [photoScrollView release];
-    [uploadScrollView release];
-    [super dealloc];
-}
+
 @end
-
-
-
-
-
-
-

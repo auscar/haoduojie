@@ -11,6 +11,7 @@
 #import "ASIHTTPRequest.h"
 #import "SBJson.h"
 #import "Constants.h"
+#import "PhotoFlowController.h"
 
 @implementation MyStreetsViewController
 @synthesize photoFlowController;

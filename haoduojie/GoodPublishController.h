@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "InfoScrollViewDelegate.h"
 #import "Good.h"
+#import "Street.h"
 #import "CustomStatusBar.h"
-@interface GoodPublishController : UIViewController<InfoScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIImagePickerControllerDelegate> {
+@interface GoodPublishController : UIViewController<InfoScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIImagePickerControllerDelegate,UIPickerViewDelegate> {
     Good* good;
     InfoScrollView *uploadScrollView;
     UITableView *infoTable;
@@ -18,10 +19,12 @@
     UIControl* controlEditing;
     UITapGestureRecognizer* tap;
     CustomStatusBar* _customStatusBar;
+    UIAlertView* alert;
     
     NSArray* infoArray;
     NSArray* infoFieldName;
     NSMutableArray* photoArray;
+    NSMutableArray* toStreets;
     NSMutableDictionary* infoFieldValue;
     
     //fields
@@ -30,6 +33,7 @@
     UITextField* price;
     UITextField* to;
     UISwitch* weibo;
+    UISwitch* priceSwitch;
     
     UIButton* buttonTapForTakingPhoto;
     NSMutableDictionary* photosTaken;

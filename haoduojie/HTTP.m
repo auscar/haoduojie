@@ -47,7 +47,7 @@
     req.userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:block,@"block", nil];
     //req.didFailSelector = @selector(didFinishRequest:);
      */
-    [req setDownloadCache:[ASIDownloadCache sharedCache]];
+    //[req setDownloadCache:[ASIDownloadCache sharedCache]];
     //[req setCachePolicy:ASIOnlyLoadIfNotCachedCachePolicy];//缓存策略是仅使用缓存的数据, 不再向服务器发请求
     [req startAsynchronous];
     
