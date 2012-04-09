@@ -256,6 +256,7 @@
 		E91A8E151532B644002EFC75 /* SinaWeiBoSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinaWeiBoSDK.h; sourceTree = "<group>"; };
 		E91A8E161532B644002EFC75 /* SinaWeiBoSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinaWeiBoSDK.m; sourceTree = "<group>"; };
 		E91A8E4F1532BDE6002EFC75 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		E91A8E511532D525002EFC75 /* appKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = appKeys.h; path = private/appKeys.h; sourceTree = "<group>"; };
 		E91EF647151F16B100A692B3 /* DiscoverButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscoverButton.h; sourceTree = "<group>"; };
 		E91EF648151F16B200A692B3 /* DiscoverButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscoverButton.m; sourceTree = "<group>"; };
 		E91EF64F151F61EB00A692B3 /* ImageFlowDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageFlowDelegate.h; sourceTree = "<group>"; };
@@ -869,6 +870,7 @@
 		E9F97A21150CDE6D0049DD60 /* common */ = {
 			isa = PBXGroup;
 			children = (
+				E91A8E511532D525002EFC75 /* appKeys.h */,
 				E91A8CFE15315BD8002EFC75 /* ui */,
 				E91A8CFC15315BA7002EFC75 /* entity */,
 				E9C19C741518A7B8007DA489 /* Constants.h */,

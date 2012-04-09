@@ -8,13 +8,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "haoduojie/MyFavStreetsViewController.m"
-         timestampString = "353952293.006251"
+         filePath = "haoduojie/ImageFlow.m"
+         timestampString = "354944012.223577"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "174"
-         endingLineNumber = "174"
-         landmarkName = "-tableView:cellForRowAtIndexPath:"
+         startingLineNumber = "128"
+         endingLineNumber = "128"
+         landmarkName = "-calculatePosition"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -22,41 +22,27 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "haoduojie/PhotoFlowController.m"
-         timestampString = "353913954.486131"
+         filePath = "haoduojie/InfoScrollView.h"
+         timestampString = "355424883.81647"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "243"
-         endingLineNumber = "243"
-         landmarkName = "-touchesBegan:withEvent:"
-         landmarkType = "5">
+         startingLineNumber = "21"
+         endingLineNumber = "21"
+         landmarkName = "@interface InfoScrollView"
+         landmarkType = "2">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "haoduojie/PhotoFlowController.m"
-         timestampString = "353913954.486131"
+         filePath = "haoduojie/StreetSelectingController.m"
+         timestampString = "355575658.342053"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "285"
-         endingLineNumber = "285"
-         landmarkName = "-ownBtnTapped:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "haoduojie/ImageLoader.m"
-         timestampString = "353950607.542018"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "44"
-         endingLineNumber = "44"
-         landmarkName = "+loadImageUsingSrc:usingBlock:"
+         startingLineNumber = "69"
+         endingLineNumber = "69"
+         landmarkName = "-request"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
